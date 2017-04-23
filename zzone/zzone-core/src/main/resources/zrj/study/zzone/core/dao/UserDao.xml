@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zrj.study.zzone.core.dao.UserDao">
+
+    <!-- 根据用户名、密码获得用户 -->
+    <select id="get" resultType="User">
+        SELECT
+            *
+        FROM core_user u
+        WHERE u.del_flag = 0 AND u.account = #{account} AND u.password = #{password}
+        LIMIT 1;
+    </select>
+
+    <!-- 根据用户名查找用户 -->
+    <select id="countByAccount" resultType="int">
+        SELECT
+            COUNT(0)
+        FROM core_user u
+        WHERE u.del_flag = 0 AND u.account = #{account}
+    </select>
+
+    <!-- 新增注册用户 -->
+    <insert id="insert">
+        INSERT INTO core_user(id, account, password, create_date, update_date, del_flag)
+        VALUES (#{id}, #{account}, #{password}, NOW(), NOW(), #{delFlag})
+    </insert>
+
+</mapper>
