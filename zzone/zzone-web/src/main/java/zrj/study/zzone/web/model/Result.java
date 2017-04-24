@@ -13,6 +13,7 @@ public class Result {
 
     /** 常用 **/
     public static final Result UNLOGIN = new Result(FAILURE, "会话超时");
+    public static final Result WRONG_DATA = new Result(FAILURE, "数据格式错误");
     public static final Result EXCEPTION = new Result(FAILURE, "系统异常");
 
 

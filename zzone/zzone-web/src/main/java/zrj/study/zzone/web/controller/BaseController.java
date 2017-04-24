@@ -25,14 +25,15 @@ public abstract class BaseController {
 
     @ExceptionHandler({MethodArgumentNotValidException.class})
     public Result handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        logger.warn("参数校验不通过", e);
-        return new Result(Result.FAILURE, e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+        String msg = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+        logger.warn("参数校验不通过: {}", msg);
+        return new Result(Result.FAILURE, msg);
     }
 
     @ExceptionHandler({HttpMessageNotReadableException.class})
     public Result handleBindException(Exception e) {
-        logger.error("数据格式错误", e);
-        return Result.EXCEPTION;
+        logger.warn("数据格式错误: {}", e.getMessage());
+        return Result.WRONG_DATA;
     }
 
     @ExceptionHandler({Exception.class})

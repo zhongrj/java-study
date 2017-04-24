@@ -6,11 +6,13 @@ import zrj.study.zzone.core.entity.User;
 import zrj.study.zzone.core.service.UserService;
 import zrj.study.zzone.web.controller.BaseController;
 import zrj.study.zzone.web.model.Result;
+import zrj.study.zzone.web.model.core.UserModel;
 
 import javax.validation.Valid;
 
 
 /**
+ * 用户Controller
  * @author zhongrj
  * @email 329053269@qq.com
  * @date 2017/4/19
@@ -22,13 +24,13 @@ public class UserController extends BaseController {
     private UserService userService;
 
     @RequestMapping("/login")
-    public Result login(@RequestBody @Valid User user) {
-        return new Result(Result.SUCCESS, "登录成功", userService.login(user));
+    public Result login(@RequestBody @Valid UserModel userModel) {
+        return new Result(Result.SUCCESS, "登录成功", userService.login(userModel.getUser()));
     }
 
     @RequestMapping("/register")
-    public Result register(@RequestBody @Valid User user) {
-        userService.register(user);
+    public Result register(@RequestBody @Valid UserModel userModel) {
+        userService.register(userModel.getUser());
         return new Result(Result.SUCCESS, "注册成功");
     }
 
