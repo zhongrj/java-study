@@ -1,5 +1,7 @@
 package zrj.study.zzone.core.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -47,6 +49,7 @@ public abstract class BaseEntity {
         this.updateDate = updateDate;
     }
 
+    @JsonIgnore
     public int getDelFlag() {
         return delFlag;
     }

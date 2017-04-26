@@ -1,0 +1,52 @@
+<html>
+
+<body>
+	<script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://passport.cnblogs.com/scripts/jsencrypt.min.js"></script>
+	<script type="text/javascript">
+
+		$(function() {
+
+		    var keyModel = {
+                "macId": "123123",
+                "source": "web"
+            };
+			$.ajax({
+			    url: "/key/get",
+			    method: "post",
+				data: JSON.stringify(keyModel),
+                contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (data) {
+			        console.log(data);
+			        var userModel = {
+                        "macId": "123123",
+                        "source": "web",
+						"keyId": data.content.keyId,
+						"user": {
+							"account": "admin",
+							"password": encrypt("admin", data.content.pubKey)
+						}
+					};
+                    $.ajax({
+                        url: "/test/decrypt",
+                        method: "post",
+                        data: JSON.stringify(userModel),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (data) {
+                            console.log(data);
+                        }
+                    });
+                }
+			});
+        });
+
+		function encrypt(content, pubk){
+			var encrypt = new JSEncrypt();
+			encrypt.setPublicKey(pubk);
+			return encrypt.encrypt(content);
+		}
+	</script>
+</body>
+</html>

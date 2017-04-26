@@ -1,6 +1,7 @@
 package zrj.study.zzone.web.config;
 
 import org.springframework.beans.factory.annotation.Autowire;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -24,10 +25,20 @@ import java.util.List;
  * @email 329053269@qq.com
  * @date 2017/4/18
  */
-@EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = {"zrj.study.zzone"})
+@ConfigurationProperties(prefix = "spring")
 public class WebConfig extends WebMvcConfigurerAdapter {
+
+    private String test;
+
+    public String getTest() {
+        return test;
+    }
+
+    public void setTest(String test) {
+        this.test = test;
+    }
 
     @Bean
     public AuthInterceptor authInterceptor() {
@@ -36,10 +47,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        System.out.println(test);
         registry.addInterceptor(new LogInterceptor()).addPathPatterns("/*");
         registry.addInterceptor(authInterceptor()).addPathPatterns("/*")
                 .excludePathPatterns("/login")
-                .excludePathPatterns("/register");
+                .excludePathPatterns("/register")
+                .excludePathPatterns("/key/get")
+                .excludePathPatterns("/test/*");
         super.addInterceptors(registry);
     }
 

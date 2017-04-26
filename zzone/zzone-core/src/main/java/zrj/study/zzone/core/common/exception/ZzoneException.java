@@ -10,4 +10,8 @@ public class ZzoneException extends RuntimeException {
     public ZzoneException(String msg) {
         super(msg);
     }
+
+    public ZzoneException(String msg, Exception e) {
+        super(msg, e);
+    }
 }
