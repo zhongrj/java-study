@@ -1,7 +1,8 @@
 package zrj.study.zzone.web.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Pattern;
 
 /**
  * @author zhongrj
@@ -10,12 +11,21 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 public class BaseModel {
 
+    /**
+     * 设备物理地址
+     */
     @NotEmpty(message = "mac地址不能为空")
     private String macId;
 
-    @NotEmpty(message = "source不能为空")
+    /**
+     * 请求来源
+     */
+    @Pattern(regexp = "android|ios|web", message = "来源不合法")
     private String source;
 
+    /**
+     * 密钥id
+     */
     private String keyId;
 
     public String getMacId() {

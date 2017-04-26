@@ -2,6 +2,7 @@ package zrj.study.zzone.web.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -22,6 +23,7 @@ import java.util.Base64;
  * @email 329053269@qq.com
  * @date 2017/4/19
  */
+@ConfigurationProperties(prefix = "zzone-web")
 public abstract class BaseController {
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
@@ -76,7 +78,10 @@ public abstract class BaseController {
     }
 
     protected String decryptBase64(String m, RSAKey rsaKey) {
-        return decrypt(base64decode(m), rsaKey);
+        if (securety) {
+            return decrypt(base64decode(m), rsaKey);
+        }
+        return m;
     }
 
     protected String decrypt(byte[] bytes, RSAKey rsaKey) {
@@ -95,4 +100,14 @@ public abstract class BaseController {
         return Base64.getEncoder().encodeToString(bytes);
     }
 
+
+    private boolean securety;
+
+    public boolean isSecurety() {
+        return securety;
+    }
+
+    public void setSecurety(boolean securety) {
+        this.securety = securety;
+    }
 }

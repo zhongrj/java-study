@@ -27,18 +27,7 @@ import java.util.List;
  */
 @Configuration
 @ComponentScan(basePackages = {"zrj.study.zzone"})
-@ConfigurationProperties(prefix = "spring")
 public class WebConfig extends WebMvcConfigurerAdapter {
-
-    private String test;
-
-    public String getTest() {
-        return test;
-    }
-
-    public void setTest(String test) {
-        this.test = test;
-    }
 
     @Bean
     public AuthInterceptor authInterceptor() {
@@ -47,13 +36,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        System.out.println(test);
         registry.addInterceptor(new LogInterceptor()).addPathPatterns("/*");
         registry.addInterceptor(authInterceptor()).addPathPatterns("/*")
                 .excludePathPatterns("/login")
                 .excludePathPatterns("/register")
                 .excludePathPatterns("/key/get")
-                .excludePathPatterns("/test/*");
+                .excludePathPatterns("/test/*")
+                .excludePathPatterns("/code/get");
         super.addInterceptors(registry);
     }
 

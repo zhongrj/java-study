@@ -1,27 +1,15 @@
-#spring:
-#    datasource:
-#        name: test
-#        url: jdbc:mysql://localhost:3306/test
-#        username: root
-#        password:
-#        # 使用druid数据源
-#        type: com.alibaba.druid.pool.DruidDataSource
-#        driver-class-name: com.mysql.jdbc.Driver
-#        filters: stat
-#        maxActive: 20
-#        initialSize: 1
-#        maxWait: 60000
-#        minIdle: 1
-#        timeBetweenEvictionRunsMillis: 60000
-#        minEvictableIdleTimeMillis: 300000
-#        validationQuery: select 'x'
-#        testWhileIdle: true
-#        testOnBorrow: false
-#        testOnReturn: false
-#        poolPreparedStatements: true
-#        maxOpenPreparedStatements: 20
+
 
 spring:
-  test: 12312312312
   jackson:
-    default-property-inclusion: non_null
+    default-property-inclusion: non_null # 生成json忽略null值
+
+
+
+
+zzone-web:
+  securety: true # true开启加解密 false关闭加解密
+
+
+
+

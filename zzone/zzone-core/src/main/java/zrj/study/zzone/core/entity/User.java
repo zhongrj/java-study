@@ -18,6 +18,8 @@ public class User extends BaseEntity {
     private String password;
 
     private String name;
+    private String mobile;
+    private String email;
 
     private String type;
 
@@ -39,6 +41,22 @@ public class User extends BaseEntity {
 
     public String getName() {
         return name;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setName(String name) {
