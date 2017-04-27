@@ -3,7 +3,7 @@ package zrj.study.zzone.web;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
-import zrj.study.zzone.web.config.WebConfig;
+import zrj.study.zzone.web.common.config.WebConfig;
 
 /**
  * @author zhongrj
