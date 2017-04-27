@@ -25,6 +25,7 @@ import java.util.Map;
 @Transactional(readOnly = true)
 public class KeyService extends BaseService {
 
+    // ----------------------------------------- 缓存管理 -----------------------------------------
     private static final String CACHE_KEY = "key";
 
     static {
@@ -34,6 +35,9 @@ public class KeyService extends BaseService {
     private static Map<String, RSAKey> getKeyMap() {
         return (Map<String, RSAKey>) CacheManage.get(CACHE_KEY);
     }
+
+
+
 
     /**
      * 获取密钥

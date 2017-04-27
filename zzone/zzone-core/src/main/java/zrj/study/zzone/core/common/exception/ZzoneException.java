@@ -11,7 +11,7 @@ public class ZzoneException extends RuntimeException {
         super(msg);
     }
 
-    public ZzoneException(String msg, Exception e) {
-        super(msg, e);
+    public ZzoneException(String msg, Throwable t) {
+        super(msg, t);
     }
 }

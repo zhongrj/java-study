@@ -28,6 +28,11 @@ public class BaseModel {
      */
     private String keyId;
 
+    /**
+     * 验证码
+     */
+    private String codeTxt;
+
     public String getMacId() {
         return macId;
     }
@@ -50,5 +55,13 @@ public class BaseModel {
 
     public void setKeyId(String keyId) {
         this.keyId = keyId;
+    }
+
+    public String getCodeTxt() {
+        return codeTxt;
+    }
+
+    public void setCodeTxt(String codeTxt) {
+        this.codeTxt = codeTxt;
     }
 }

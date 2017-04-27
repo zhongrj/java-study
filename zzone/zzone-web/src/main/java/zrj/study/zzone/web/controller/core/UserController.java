@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import zrj.study.zzone.core.entity.RSAKey;
 import zrj.study.zzone.core.entity.User;
+import zrj.study.zzone.core.service.CodeService;
 import zrj.study.zzone.core.service.KeyService;
 import zrj.study.zzone.core.service.UserService;
 import zrj.study.zzone.web.controller.BaseController;
@@ -29,6 +30,9 @@ public class UserController extends BaseController {
     @Autowired
     private KeyService keyService;
 
+    @Autowired
+    private CodeService codeService;
+
     @RequestMapping("/login")
     public Result login(@RequestBody @Valid UserModel userModel) {
         return new Result(Result.SUCCESS, "登录成功", userService.login(userModel.getUser()));
@@ -36,6 +40,8 @@ public class UserController extends BaseController {
 
     @RequestMapping("/register")
     public Result register(@RequestBody @Valid UserModel userModel) {
+
+        codeService.checkCode(userModel.getMacId(), userModel.getCodeTxt());
 
         User user = userModel.getUser();
 
