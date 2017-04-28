@@ -21,6 +21,11 @@ public class CacheManage {
     }
 
 
+    // --------------------------------------- 本地线程变量 ---------------------------------------
+
+    public static final ThreadLocal<String> REQUEST_URI = new ThreadLocal<>();
+
+
     // --------------------------------------- 公共方法 ---------------------------------------
 
     public static Object get(String key) {
