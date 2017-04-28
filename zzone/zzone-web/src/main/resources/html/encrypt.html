@@ -1,31 +1,34 @@
 <html>
 
 <body>
+
+	加密测试...(请看console)
 	<script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://passport.cnblogs.com/scripts/jsencrypt.min.js"></script>
 	<script type="text/javascript">
 
 		$(function() {
 
-		    var keyModel = {
-                "macId": "123123",
-                "source": "web"
-            };
 			$.ajax({
 			    url: "/key/get",
 			    method: "post",
-				data: JSON.stringify(keyModel),
+				data: JSON.stringify({
+                    "macId": "123123",
+                    "source": "web"
+                }),
                 contentType: "application/json; charset=utf-8",
 				dataType: "json",
 				success: function (data) {
 			        console.log(data);
+			        var encryptedData = encrypt("admin", data.content.pubKey);
+                    console.log("密文: " + encryptedData);
 			        var userModel = {
                         "macId": "123123",
                         "source": "web",
 						"keyId": data.content.keyId,
 						"user": {
 							"account": "admin",
-							"password": encrypt("admin", data.content.pubKey)
+							"password": encryptedData
 						}
 					};
                     $.ajax({

@@ -14,4 +14,5 @@ public class ZzoneException extends RuntimeException {
     public ZzoneException(String msg, Throwable t) {
         super(msg, t);
     }
+
 }

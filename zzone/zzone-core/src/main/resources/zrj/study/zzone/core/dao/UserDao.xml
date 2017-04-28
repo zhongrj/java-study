@@ -11,7 +11,7 @@
         LIMIT 1;
     </select>
 
-    <!-- 根据用户名查找用户 -->
+    <!-- 查找同名用户 -->
     <select id="countByAccount" resultType="int">
         SELECT
             COUNT(0)
@@ -21,8 +21,8 @@
 
     <!-- 新增注册用户 -->
     <insert id="insert">
-        INSERT INTO core_user(id, account, password, create_date, update_date, del_flag)
-        VALUES (#{id}, #{account}, #{password}, NOW(), NOW(), #{delFlag})
+        INSERT INTO core_user(id, account, password, name, mobile, email, type, status, create_date, update_date, del_flag)
+        VALUES (#{id}, #{account}, #{password}, #{name}, #{mobile}, #{email}, #{type}, #{status}, NOW(), NOW(), #{delFlag})
     </insert>
 
 </mapper>

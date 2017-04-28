@@ -1,10 +1,9 @@
 package zrj.study.util.json;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 /**
  * @author zhongrj
@@ -15,19 +14,15 @@ public class JsonUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JsonUtils.class);
 
+    // 不知道是否线程安全
     private static final ObjectMapper mapper = new ObjectMapper();
 
-    public static String toJsonString(Object object) {
+    public static String toJsonString(Object object) throws JsonProcessingException {
         return toJson(object);
     }
 
-    private static String toJson(Object object) {
-        try {
-            return mapper.writeValueAsString(object);
-        } catch (IOException e) {
-            logger.warn("write to json string error:" + object, e);
-            return null;
-        }
+    private static String toJson(Object object) throws JsonProcessingException {
+        return mapper.writeValueAsString(object);
     }
 }
 

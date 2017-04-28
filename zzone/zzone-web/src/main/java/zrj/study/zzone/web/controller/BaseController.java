@@ -30,7 +30,11 @@ public abstract class BaseController {
 
     @ExceptionHandler({ZzoneException.class})
     public Result handleServiceException(ZzoneException e) {
-        logger.error(e.getMessage(), e);
+        if (null == e.getCause()) {
+            logger.error(e.getMessage());
+        } else {
+            logger.error(e.getMessage(), e);
+        }
         return new Result(Result.FAILURE, e.getMessage());
     }
 
@@ -109,5 +113,11 @@ public abstract class BaseController {
 
     public void setSecurety(boolean securety) {
         this.securety = securety;
+    }
+
+    public static void main(String[] args) {
+        BaseController b = new BaseController() {
+        };
+        System.out.println(b.base64encode("abc".getBytes()));
     }
 }

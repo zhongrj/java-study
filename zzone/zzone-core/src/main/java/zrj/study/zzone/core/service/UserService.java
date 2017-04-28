@@ -19,6 +19,13 @@ import java.util.regex.Pattern;
 @Transactional(readOnly = true)
 public class UserService extends BaseService {
 
+    public static final String TYPE_ORDINARY_USER = "0"; // 普通用户
+    public static final String TYPE_MEMBER = "1"; // 会员用户
+    public static final String STATUS_NORMAL = "0"; // 正常状态
+    public static final String STATUS_FREEZED = "1"; // 冻结状态
+    public static final String STATUS_BLACKLIST = "2"; // 黑名单状态
+
+
     private static final Pattern PHONE_PATTERN = Pattern.compile("\\d{11}");
 
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^(\\w)+(\\.\\w+)*@(\\w)+((\\.\\w+)+)$");
@@ -38,6 +45,13 @@ public class UserService extends BaseService {
             throw new ZzoneException("用户名或密码错误");
         }
 
+        switch (user.getStatus()) {
+            case STATUS_FREEZED:
+                throw new ZzoneException("该用户已被冻结");
+            case STATUS_BLACKLIST:
+                throw new ZzoneException("该用户为黑名单用户");
+        }
+
         String token = sessionService.addSession(user);
 
         return token;
@@ -50,7 +64,7 @@ public class UserService extends BaseService {
             throw new ZzoneException("手机号格式错误");
         }
 
-        if (StringUtils.isBlank(user.getMobile()) || !EMAIL_PATTERN.matcher(user.getMobile()).matches()){
+        if (StringUtils.isBlank(user.getEmail()) || !EMAIL_PATTERN.matcher(user.getEmail()).matches()){
             throw new ZzoneException("邮箱格式错误");
         }
 
@@ -58,6 +72,8 @@ public class UserService extends BaseService {
             throw new ZzoneException("用户名已存在");
         }
         user.preInsert();
+        user.setType(TYPE_ORDINARY_USER);
+        user.setStatus(STATUS_NORMAL);
         userDao.insert(user);
     }
 

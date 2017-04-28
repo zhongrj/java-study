@@ -22,6 +22,7 @@ public class User extends BaseEntity {
     private String email;
 
     private String type;
+    private String status;
 
     public String getAccount() {
         return account;
@@ -69,5 +70,13 @@ public class User extends BaseEntity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

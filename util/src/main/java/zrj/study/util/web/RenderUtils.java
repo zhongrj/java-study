@@ -1,5 +1,6 @@
 package zrj.study.util.web;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import zrj.study.util.json.JsonUtils;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +18,7 @@ public class RenderUtils {
      * @param object
      * @return
      */
-    public static String renderString(HttpServletResponse response, Object object) {
+    public static String renderString(HttpServletResponse response, Object object) throws JsonProcessingException {
         return renderString(response, JsonUtils.toJsonString(object), "application/json", true);
     }
 
@@ -27,7 +28,7 @@ public class RenderUtils {
      * @param object
      * @return
      */
-    public static String renderString(HttpServletResponse response, Object object, boolean resetResp) {
+    public static String renderString(HttpServletResponse response, Object object, boolean resetResp) throws JsonProcessingException {
         return renderString(response, JsonUtils.toJsonString(object), "application/json", resetResp);
     }
 

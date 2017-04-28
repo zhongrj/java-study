@@ -26,12 +26,12 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LogInterceptor()).addPathPatterns("/*");
-        registry.addInterceptor(authInterceptor()).addPathPatterns("/*")
+        registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(authInterceptor()).addPathPatterns("/**")
+                .excludePathPatterns("/test/*")
                 .excludePathPatterns("/login")
                 .excludePathPatterns("/register")
                 .excludePathPatterns("/key/get")
-                .excludePathPatterns("/test/*")
                 .excludePathPatterns("/code/get");
         super.addInterceptors(registry);
     }

@@ -1,0 +1,76 @@
+<html>
+
+<body>
+
+	验证码测试...
+	<br />
+	<input id="codeTxt" type="text" />
+	<img id="codeImg" src="" />
+	<input id="submitBtn" type="button" value="提交">
+
+	<script type="text/javascript" src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript">
+
+		$(function() {
+
+
+            getCodeImg();
+		    function getCodeImg() {
+                var oReq = new XMLHttpRequest();
+                oReq.open("POST", "/code/get", true);
+                oReq.setRequestHeader("content-type", "application/json; charset=utf-8");
+                oReq.responseType = "blob";
+                oReq.onreadystatechange = function () {
+                    if (oReq.readyState == oReq.DONE) {
+                        var blob = oReq.response;
+                        $('#codeImg')[0].src = URL.createObjectURL(blob);
+                    }
+                }
+                oReq.send(JSON.stringify({
+                    "macId": "123123",
+                    "source": "web",
+                    "code": {
+                        "width": 80,
+                        "height": 30
+                    }
+                }));
+            }
+
+		    // $.ajax照理说应该是可以的, 但是不会搞
+//            $.ajax({
+//			    url: "/code/get",
+//			    method: "post",
+//				data: JSON.stringify(codeModel),
+//                contentType: "application/json; charset=utf-8",
+//				success: function (data, a, b) {
+//			        console.log(data);
+//			        console.log(a);
+//			        console.log(b);
+//                }
+//			});
+
+            $('#submitBtn').click(function(){
+                $.ajax({
+					url: "/test/checkCode",
+					method: "post",
+					data: JSON.stringify({
+                        "macId": "123123",
+                        "source": "web",
+						"codeTxt": $('#codeTxt').val()
+					}),
+					contentType: "application/json; charset=utf-8",
+					dataType: 'json',
+					success: function (data) {
+					    alert(data.msg);
+                        getCodeImg();
+                        $('#codeTxt').val("");
+					}
+				});
+			});
+
+
+        });
+
+	</script>
+</body>
+</html>

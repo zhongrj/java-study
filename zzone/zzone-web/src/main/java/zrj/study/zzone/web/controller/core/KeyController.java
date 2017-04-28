@@ -22,7 +22,7 @@ import java.util.Map;
  * @date 2017/4/24
  */
 @RestController
-@RequestMapping("key")
+@RequestMapping("/key/")
 public class KeyController extends BaseController {
 
     @Autowired
