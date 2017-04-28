@@ -12,6 +12,8 @@ import zrj.study.zzone.web.model.Result;
 import zrj.study.zzone.web.model.core.UserModel;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -35,7 +37,9 @@ public class UserController extends BaseController {
 
     @RequestMapping("/login")
     public Result login(@RequestBody @Valid UserModel userModel) {
-        return new Result(Result.SUCCESS, "登录成功", userService.login(userModel.getUser())); // 可多个设备同时登陆, 一个用户可对应多个token
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("token", userService.login(userModel.getUser()));
+        return new Result(Result.SUCCESS, "登录成功", resultMap); // 可多个设备同时登陆, 一个用户可对应多个token
     }
 
     @RequestMapping("/register")

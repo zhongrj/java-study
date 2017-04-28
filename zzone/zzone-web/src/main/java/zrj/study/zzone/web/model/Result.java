@@ -7,37 +7,36 @@ package zrj.study.zzone.web.model;
  */
 public class Result {
 
-
-    public static final String SUCCESS = "success";
-    public static final String FAILURE = "failure";
+    /** 状体码 **/
+    public static final String SUCCESS = "0000";
+    public static final String FAILURE = "9999";
 
     /** 常用 **/
-    public static final Result UNLOGIN = new Result(FAILURE, "会话超时");
+    public static final Result UNLOGIN = new Result("9998", "会话超时");
     public static final Result WRONG_DATA = new Result(FAILURE, "数据格式错误");
     public static final Result EXCEPTION = new Result(FAILURE, "系统异常");
 
 
-
-    private String status;
+    private String code;
     private String msg;
     private Object content;
 
-    public Result(String status, String msg) {
-        this(status, msg, null);
+    public Result(String code, String msg) {
+        this(code, msg, null);
     }
 
-    public Result(String status, String msg, Object content) {
-        this.status = status;
+    public Result(String code, String msg, Object content) {
+        this.code = code;
         this.msg = msg;
         this.content = content;
     }
 
-    public String getStatus() {
-        return status;
+    public String getCode() {
+        return code;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getMsg() {

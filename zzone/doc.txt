@@ -1,0 +1,69 @@
+
+
+# zzone文档
+                                                    ----初步文档(凑合用)
+
+
+- 所有请求Method均为post
+- 请求参数均放在请求body
+- 请求参数模版
+    {
+        "macId": "123123",      // 物理地址        必填
+        "source": "web",        // 请求来源        必填           web|ios|android
+        "keyId": "",            // 密钥id         非必填 (需要加解密时填)
+        "codeTxt": "",          // 验证码          非必填 (需要校验验证码时填)
+
+        "xxx":{                 // 这个看具体业务而定
+
+        }
+    }
+- 返回结果模版
+    {
+        "code": "0000",                 // 状态码                  必填
+        "msg": "登录成功",               // 提示信息                必填
+        "content": {                    // 这个看具体业务而定        非必填
+
+        }
+    }
+- 状态码
+    0000        成功
+    9999        失败
+    9998        会话超时
+
+
+
+
+1.获取密钥
+    /key/get
+    请求参数为必填项
+    返回
+    "content": {
+        "keyId": "5cb5a67492fe49a397c7e243d2e8d1d9",                                    // 密钥id (返回加密数据时需要携带)
+        "pubKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvuh......"               // 服务器公钥 (RSA公钥)
+    }
+
+
+
+2.注册
+    /register
+    请求参数见UserModel(密码需要加密)
+    返回为必填项
+
+
+3.登录
+    /login
+    请求参数见UserModel
+    返回
+    "content": {
+        "token": "7b76696cfa724e6c9ea8306240b1dc2b"
+    }
+    之后的请求只需要在HTTP-Header添加token: 7b76696cfa724e6c9ea8306240b1dc2b, 便当作已登录
+    若token已过期, 则返回状态码9998.
+    (目前同一个账号可以拥有多个token, 即允许多个设备同时登录)
+
+
+
+4.获取验证码
+    /code/get
+    请求参数为必填项
+    返回验证码图片流(前端展示可见demo)
