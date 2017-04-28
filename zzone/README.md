@@ -37,3 +37,10 @@ public DruidDataSource dataSource(){
 
 ### 项目启动
 > 找到zzone-web模块下的类zrj.study.zzone.web.ZzoneApplication，run main...
+
+### demo
+项目默认上下文http://localhost:8080
+- /test/encrypt         //加密demo
+- /test/code            //验证码demo
+
+
