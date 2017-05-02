@@ -64,6 +64,23 @@ public class TestController extends BaseController {
         return new Result(Result.SUCCESS, "验证码正确");
     }
 
+    @RequestMapping("video")
+    public void vidio(HttpServletResponse response) {
+        returnResource(response, "classpath:html/video.html");
+    }
+
+    @RequestMapping("videoStream")
+    public void videoStream(HttpServletResponse response) {
+        returnResource(response, "classpath:html/pingpang.mp4");
+    }
+
+    @RequestMapping("videoChat")
+    public void videoChat(HttpServletResponse response) {
+        returnResource(response, "classpath:html/videoChat.html");
+    }
+
+
+
 
 
 }
