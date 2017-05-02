@@ -1,5 +1,6 @@
 # mysql 全角转半角函数
 
+DROP FUNCTION IF EXISTS toDBC;
 DELIMITER $$
 CREATE FUNCTION `toDBC`(`string` varchar(255)) RETURNS varchar(255) CHARSET utf8
 BEGIN
