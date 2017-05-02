@@ -9,17 +9,19 @@ BEGIN
 	DECLARE len INT;
 	DECLARE i INT;
 	DECLARE c VARCHAR(1);
-	
-	SET str = string; 
-	SET min = 15711361;
-	SET max = 15711646;
+	DECLARE b INT;
+
+	SET str = string;
+	SET min = 65281;
+	SET max = 65374;
 	SET len = CHAR_LENGTH(str);
 	SET i = 1;
 	WHILE i <= len DO
 		SET c = SUBSTRING(str, i, 1);
-		IF ORD(c) >= min THEN
-			IF ORD(c) <= max THEN
-				SET str = REPLACE(str, c, CHAR(ORD(c) - 15711328));
+		SET b = ORD(CONVERT(c USING ucs2));
+		IF b >= min THEN
+			IF b <= max THEN
+				SET str = REPLACE(str, c, CHAR(b - 65248));
 			END IF;
 		END IF;
 		SET i = i + 1;
