@@ -72,6 +72,7 @@ public class UserService extends BaseService {
             throw new ZzoneException("用户名已存在");
         }
         user.preInsert();
+        user.generateUUID();
         user.setType(TYPE_ORDINARY_USER);
         user.setStatus(STATUS_NORMAL);
         userDao.insert(user);

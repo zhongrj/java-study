@@ -73,7 +73,7 @@ public class KeyService extends BaseService {
             KeyPair keyPair = RSAUtils.newKeyPair("web".equals(source));
             rsaKey.setRsaPublicKey((RSAPublicKey) keyPair.getPublic());
             rsaKey.setRsaPrivateKey((RSAPrivateKey) keyPair.getPrivate());
-            rsaKey.preInsert();
+            rsaKey.generateUUID();
             rsaKey.setCreateDate(new Date());
             getKeyMap().put(rsaKey.getId(), rsaKey);
             return rsaKey;
