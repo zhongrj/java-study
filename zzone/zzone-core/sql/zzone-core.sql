@@ -57,3 +57,39 @@ INSERT INTO `core_user` VALUES ('0a27d82c021e456fb8b4f9e0fe343c1c', 'admin', 'ad
 -- ----------------------------
 DROP VIEW IF EXISTS `core_user_basic`;
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `core_user_basic` AS select `core_user`.`id` AS `id`,`core_user`.`account` AS `account`,`core_user`.`name` AS `name`,`core_user`.`mobile` AS `mobile`,`core_user`.`email` AS `email`,`core_user`.`type` AS `type`,`core_user`.`status` AS `status`,`core_user`.`del_flag` AS `del_flag` from `core_user`;
+
+
+
+
+
+
+
+
+
+-- ----------------------------
+-- Table structure for `core_option`
+-- ----------------------------
+DROP TABLE IF EXISTS `core_option`;
+CREATE TABLE `core_option` (
+  `label` varchar(100) NOT NULL COMMENT '表情',
+  `value` varchar(100) NOT NULL COMMENT '值',
+  `type` varchar(100) NOT NULL COMMENT '类型',
+  `description` varchar(200) NOT NULL COMMENT '描述',
+  `del_flag` int(5) NOT NULL COMMENT '删除标识 0正常 1删除',
+  PRIMARY KEY (`value`,`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of core_option
+-- ----------------------------
+INSERT INTO `core_option` VALUES ('离线', '0', 'user_status', '用户状态', '0');
+INSERT INTO `core_option` VALUES ('在线', '1', 'user_status', '用户状态', '0');
+
+
+
+
+
+
+
+
+
