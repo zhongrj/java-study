@@ -28,6 +28,7 @@
         <module>zzone-web</module>
         <module>zzone-core</module>
         <module>zzone-test</module>
+        <module>zzone-chat</module>
     </modules>
 
 
