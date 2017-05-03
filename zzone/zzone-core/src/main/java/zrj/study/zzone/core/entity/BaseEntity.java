@@ -20,8 +20,11 @@ public abstract class BaseEntity {
 
     private int delFlag;    // 删除标识 0正常 1删除
 
-    public void preInsert() {
+    public void generateUUID() {
         id = UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+    public void preInsert() {
         delFlag = 0;
     }
 
