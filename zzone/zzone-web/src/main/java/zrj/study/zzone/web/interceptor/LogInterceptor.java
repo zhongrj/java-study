@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+import zrj.study.util.string.IdGen;
 import zrj.study.zzone.core.common.cache.CacheManage;
-import zrj.study.zzone.web.common.aop.log.LogRequestBodyAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +23,8 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+//        CacheManage.SERIAL_NO.set(IdGen.uuid());
+        CacheManage.SERIAL_NO.set(String.valueOf(System.currentTimeMillis()));
         CacheManage.REQUEST_URI.set(request.getRequestURI());
         return true;
     }

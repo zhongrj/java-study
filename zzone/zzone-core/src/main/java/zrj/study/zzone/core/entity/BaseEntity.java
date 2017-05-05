@@ -1,6 +1,7 @@
 package zrj.study.zzone.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import zrj.study.util.string.IdGen;
 
 import java.util.Date;
 import java.util.UUID;
@@ -21,7 +22,7 @@ public abstract class BaseEntity {
     private int delFlag;    // 删除标识 0正常 1删除
 
     public void generateUUID() {
-        id = UUID.randomUUID().toString().replaceAll("-", "");
+        id = IdGen.uuid();
     }
 
     public void preInsert() {

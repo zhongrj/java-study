@@ -35,7 +35,8 @@ public class LogResponseBodyAdvice implements ResponseBodyAdvice {
 
     private void log(Object body) {
         try {
-            logger.info("Response: {} | Result: {}", CacheManage.REQUEST_URI.get(), JsonUtils.toJsonString(body));
+            logger.info("SerialNo: {} | Response: {} | Result: {}", CacheManage.SERIAL_NO.get(), CacheManage.REQUEST_URI.get(), JsonUtils.toJsonString(body));
+            CacheManage.SERIAL_NO.remove();
             CacheManage.REQUEST_URI.remove();
         } catch (Exception e) {
             logger.warn("响应日志异常", e);

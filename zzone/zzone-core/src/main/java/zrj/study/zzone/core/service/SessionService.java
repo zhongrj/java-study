@@ -3,12 +3,12 @@ package zrj.study.zzone.core.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import zrj.study.util.string.IdGen;
 import zrj.study.zzone.core.dao.SessionDao;
 import zrj.study.zzone.core.entity.Session;
 import zrj.study.zzone.core.entity.User;
 
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * @author zhongrj
@@ -26,7 +26,7 @@ public class SessionService extends BaseService {
 
     @Transactional
     public String addSession(User user) {
-        String token = UUID.randomUUID().toString().replaceAll("-", "");
+        String token = IdGen.uuid();
         Session session = new Session();
         session.preInsert();
         session.setToken(token);

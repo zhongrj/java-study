@@ -23,6 +23,7 @@ public class CacheManage {
 
     // --------------------------------------- 本地线程变量 ---------------------------------------
 
+    public static final ThreadLocal<String> SERIAL_NO = new ThreadLocal<>();
     public static final ThreadLocal<String> REQUEST_URI = new ThreadLocal<>();
 
 

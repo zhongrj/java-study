@@ -51,7 +51,7 @@ public class LogRequestBodyAdvice implements RequestBodyAdvice {
 
     private void log(Object body) {
         try {
-            logger.info("Request: {} | Params: {}", CacheManage.REQUEST_URI.get(), JsonUtils.toJsonString(body));
+            logger.info("SerialNo: {} | Request: {} | Params: {}", CacheManage.SERIAL_NO.get(), CacheManage.REQUEST_URI.get(), JsonUtils.toJsonString(body));
         } catch (Exception e) {
             logger.warn("请求日志异常", e);
         }
