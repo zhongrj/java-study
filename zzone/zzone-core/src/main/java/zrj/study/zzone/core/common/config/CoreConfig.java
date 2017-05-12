@@ -31,6 +31,7 @@ public class CoreConfig implements TransactionManagementConfigurer {
     @Bean
     public DruidDataSource dataSource(){
         DruidDataSource dataSource = new DruidDataSource();
+//        dataSource.setDriverClassName("${jdbc.driver}"); // 这样也可以
         dataSource.setDriverClassName(env.getProperty("jdbc.driver"));
         dataSource.setUrl(env.getProperty("jdbc.url"));
         dataSource.setUsername(env.getProperty("jdbc.username"));
