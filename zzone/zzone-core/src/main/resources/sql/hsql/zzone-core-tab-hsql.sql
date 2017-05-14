@@ -28,10 +28,6 @@ CREATE TABLE core_user (
   update_date datetime,
   del_flag int,
 );
--- ----------------------------
--- View structure for core_user_basic
--- ----------------------------
-CREATE VIEW core_user_basic AS select core_user.id AS id, core_user.account AS account, core_user.name AS name, core_user.mobile AS mobile, core_user.email AS email, core_user.type AS type, core_user.status AS status, core_user.del_flag AS del_flag from core_user;
 
 
 
