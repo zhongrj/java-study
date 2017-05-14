@@ -2,6 +2,7 @@ package zrj.study.test.spring.test;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -19,15 +20,17 @@ import java.sql.SQLException;
  */
 @ContextConfiguration(classes = zrj.study.test.spring.mybatis.Config.class)
 //@TestExecutionListeners(listeners = TransactionalTestExecutionListener.class)
-@Transactional
-public class TransactionTest extends BaseTest {
+@Transactional // 这个好像有用
+public class Test1 extends BaseTest {
 
     @Autowired
     private Service service;
 
     @Test
-    @Rollback // 没反应..
+//    @Rollback // 没反应..
+//    @Commit     // 提交
     public void testTransaction() throws SQLException {
+        System.out.println("123");
         service.insert();
     }
 }

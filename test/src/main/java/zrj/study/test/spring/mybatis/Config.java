@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
@@ -56,6 +58,15 @@ public class Config implements TransactionManagementConfigurer {
         return new DataSourceTransactionManager(dataSource());
     }
 
+//    @Profile("production") // 也可以修饰class
+//    @Bean // 内存数据库
+//    public DataSource dataSource() {
+//        return new EmbeddedDatabaseBuilder()
+//                .setType(EmbeddedDatabaseType.HSQL)
+//                .addScript("classpath:com/bank/config/sql/schema.sql")
+//                .addScript("classpath:com/bank/config/sql/test-data.sql")
+//                .build();
+//    }
 
 
 }

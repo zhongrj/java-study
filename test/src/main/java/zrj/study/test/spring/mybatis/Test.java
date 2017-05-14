@@ -35,10 +35,11 @@ public class Test {
 //          <scope>provided</scope>
 //        </dependency>
         // 那么就很好解释了
-        service.rollback1();
-
+//        service.rollback1();
 
 //        service.rollback2();
+
+//        service.insert();
     }
 
 }
