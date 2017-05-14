@@ -58,6 +58,12 @@
             <artifactId>spring-jdbc</artifactId>
         </dependency>
 
+        <!-- 内存数据库 -->
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

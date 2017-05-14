@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import zrj.study.zzone.core.service.OptionService;
+import zrj.study.zzone.web.controller.BaseController;
 import zrj.study.zzone.web.model.Result;
 import zrj.study.zzone.web.model.core.OptionModel;
 
@@ -17,7 +18,7 @@ import zrj.study.zzone.web.model.core.OptionModel;
  */
 @RestController
 @RequestMapping("/option/")
-public class OptionController {
+public class OptionController extends BaseController {
 
     @Autowired
     private OptionService optionService;

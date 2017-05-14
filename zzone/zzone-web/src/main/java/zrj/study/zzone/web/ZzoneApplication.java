@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;
 import zrj.study.zzone.web.common.config.WebConfig;
 
+import javax.swing.*;
+
 /**
  * @author zhongrj
  * @email 329053269@qq.com
@@ -15,7 +17,15 @@ import zrj.study.zzone.web.common.config.WebConfig;
 public class ZzoneApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ZzoneApplication.class, args);
+        try {
+            SpringApplication zzoneApplication = new SpringApplication(ZzoneApplication.class);
+            zzoneApplication.setAdditionalProfiles("dev-front"); // 设置profile
+            zzoneApplication.run(args);
+        } catch (Throwable t) {
+            System.exit(0);
+        }
+
+//        SpringApplication.run(ZzoneApplication.class, args);
     }
 
 }
