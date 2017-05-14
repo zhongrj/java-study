@@ -14,6 +14,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
@@ -60,22 +62,22 @@ public class CoreConfig implements TransactionManagementConfigurer {
     @Bean
     @Profile("dev-front")
     public DataSource embeddedDatabase() throws Exception {
-        Server.main(new String[]{"-database.0", "db/zzone", "-dbname.0", "zzone"});
-        SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
-        dataSource.setDriverClass(JDBCDriver.class);
-        dataSource.setUrl("jdbc:hsqldb:hsql://localhost/zzone");
-        dataSource.setUsername("sa");
-        dataSource.setPassword("");
-        Connection conn = dataSource.getConnection();
-        Statement stmt = conn.createStatement();
-        stmt.executeQuery(getStringFromPath("sql/hsql/zzone-core-tab-hsql.sql"));
-        stmt.executeQuery(getStringFromPath("sql/hsql/zzone-core-data-hsql.sql"));
-        return dataSource;
+//        Server.main(new String[]{"-database.0", "db/zzone", "-dbname.0", "zzone"});
+//        SimpleDriverDataSource dataSource = new SimpleDriverDataSource();
+//        dataSource.setDriverClass(JDBCDriver.class);
+//        dataSource.setUrl("jdbc:hsqldb:hsql://localhost/zzone");
+//        dataSource.setUsername("sa");
+//        dataSource.setPassword("");
+//        Connection conn = dataSource.getConnection();
+//        Statement stmt = conn.createStatement();
+//        stmt.executeQuery(getStringFromPath("sql/hsql/zzone-core-tab-hsql.sql"));
+//        stmt.executeQuery(getStringFromPath("sql/hsql/zzone-core-data-hsql.sql"));
+//        return dataSource;
 
-//        return new EmbeddedDatabaseBuilder()
-//                .setType(EmbeddedDatabaseType.HSQL)
-//                .addScripts("/sql/zzone-core-tab-hsql.sql", "/sql/zzone-core-data-hsql.sql")
-//                .build();
+        return new EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.HSQL)
+                .addScripts("sql/hsql/zzone-core-tab-hsql.sql", "sql/hsql/zzone-core-data-hsql.sql")
+                .build();
     }
 
     private String getStringFromPath(String path) throws IOException {
