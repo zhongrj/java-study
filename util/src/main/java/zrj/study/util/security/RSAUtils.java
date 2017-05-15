@@ -183,7 +183,7 @@ public class RSAUtils {
         // 加密useBC
         byte[] encryptedDataBC = encryptUseBC(srcText.getBytes("UTF-8"), keyPair.getPublic().getEncoded());
         // Cipher解密useBC
-        byte[] srcDataBC = decryptUseBC(encryptedData, keyPair.getPrivate().getEncoded());
+        byte[] srcDataBC = decryptUseBC(encryptedDataBC, keyPair.getPrivate().getEncoded());
 
         System.out.println(new String(srcDataBC, "UTF-8"));
 

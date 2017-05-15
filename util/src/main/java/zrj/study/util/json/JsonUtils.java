@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+
 /**
  * @author zhongrj
  * @email 329053269@qq.com
@@ -23,6 +25,10 @@ public class JsonUtils {
 
     private static String toJson(Object object) throws JsonProcessingException {
         return mapper.writeValueAsString(object);
+    }
+
+    public static <E> E parseToObject(String json, Class<E> clazz) throws IOException {
+        return mapper.readValue(json, clazz);
     }
 }
 
