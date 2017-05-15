@@ -19,7 +19,7 @@ public class ZzoneApplication {
     public static void main(String[] args) {
         try {
             SpringApplication zzoneApplication = new SpringApplication(ZzoneApplication.class);
-            zzoneApplication.setAdditionalProfiles("dev-front"); // 设置profile
+            zzoneApplication.setAdditionalProfiles("dev-back"); // 设置profile
             zzoneApplication.run(args);
         } catch (Throwable t) {
             System.exit(0);

@@ -21,6 +21,9 @@ public class Result {
     private String msg;
     private Object content;
 
+    public Result() {
+    }
+
     public Result(String code, String msg) {
         this(code, msg, null);
     }

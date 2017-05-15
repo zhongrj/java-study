@@ -60,6 +60,14 @@ public class UserService extends BaseService {
     @Transactional
     public void register(User user) {
 
+        if (userDao.countByAccount(user.getAccount()) > 0) {
+            throw new ZzoneException("用户名已存在");
+        }
+
+        if (StringUtils.isBlank(user.getName())) {
+            throw new ZzoneException("用户昵称不能为空");
+        }
+
         if (StringUtils.isBlank(user.getMobile()) || !PHONE_PATTERN.matcher(user.getMobile()).matches()){
             throw new ZzoneException("手机号格式错误");
         }
@@ -68,9 +76,6 @@ public class UserService extends BaseService {
             throw new ZzoneException("邮箱格式错误");
         }
 
-        if (userDao.countByAccount(user.getAccount()) > 0) {
-            throw new ZzoneException("用户名已存在");
-        }
         user.preInsert();
         user.generateUUID();
         user.setType(TYPE_ORDINARY_USER);
@@ -78,8 +83,4 @@ public class UserService extends BaseService {
         userDao.insert(user);
     }
 
-    public static void main(String[] args) {
-        String a = "aa@as.co";
-        System.out.println(StringUtils.isNotBlank(a) && EMAIL_PATTERN.matcher(a).matches());
-    }
 }

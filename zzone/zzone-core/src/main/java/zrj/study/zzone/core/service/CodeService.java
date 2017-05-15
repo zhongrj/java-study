@@ -63,4 +63,10 @@ public class CodeService {
         }
     }
 
+
+    // ---------------------------------------- 只给单元测试用 ---------------------------------
+    public String getCode(String macId) {
+        return getCodeMap().get(macId);
+    }
+
 }
