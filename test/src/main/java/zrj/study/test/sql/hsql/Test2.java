@@ -1,4 +1,4 @@
-package zrj.study.test.hsql;
+package zrj.study.test.sql.hsql;
 
 import org.hsqldb.server.Server;
 
