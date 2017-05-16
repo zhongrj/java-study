@@ -1,5 +1,6 @@
 package zrj.study.util.json;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -17,7 +18,11 @@ public class JsonUtils {
     private static final Logger logger = LoggerFactory.getLogger(JsonUtils.class);
 
     // 不知道是否线程安全
+    // 网上说是线程安全的
     private static final ObjectMapper mapper = new ObjectMapper();
+    static {
+        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    }
 
     public static String toJsonString(Object object) throws JsonProcessingException {
         return toJson(object);

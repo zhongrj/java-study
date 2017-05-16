@@ -28,7 +28,7 @@
         </dependency>
 
         <!-- test -->
-        <dependency>
+        <dependency>    <!-- 整合了下面的全部 -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
         </dependency>

@@ -19,7 +19,7 @@ import zrj.study.zzone.core.common.cache.CacheManage;
 @ControllerAdvice
 public class LogResponseBodyAdvice implements ResponseBodyAdvice {
 
-    private Logger logger = LoggerFactory.getLogger(LogRequestBodyAdvice.class);
+    private Logger logger = LoggerFactory.getLogger(LogResponseBodyAdvice.class);
 
 
     @Override
