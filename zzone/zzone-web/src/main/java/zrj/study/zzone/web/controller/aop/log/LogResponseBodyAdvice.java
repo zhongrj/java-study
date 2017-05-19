@@ -1,4 +1,4 @@
-package zrj.study.zzone.web.common.aop.log;
+package zrj.study.zzone.web.controller.aop.log;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

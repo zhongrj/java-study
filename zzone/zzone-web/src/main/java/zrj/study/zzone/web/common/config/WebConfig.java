@@ -3,8 +3,10 @@ package zrj.study.zzone.web.common.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import zrj.study.zzone.core.common.config.CoreConfig;
 import zrj.study.zzone.web.interceptor.AuthInterceptor;
 import zrj.study.zzone.web.interceptor.LogInterceptor;
 
@@ -16,7 +18,8 @@ import zrj.study.zzone.web.interceptor.LogInterceptor;
  * @date 2017/4/18
  */
 @Configuration
-@ComponentScan(basePackages = {"zrj.study.zzone"})
+@Import({CoreConfig.class})
+@ComponentScan(basePackages = {"zrj.study.zzone.web.controller"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean
