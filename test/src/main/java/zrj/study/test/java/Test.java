@@ -57,4 +57,11 @@ public class Test {
         System.out.println("no pass");
     }
 
+    @org.junit.Test
+    public void charTest() {
+        char a = 'a';
+        char b = (char) (a + 256);
+        System.out.println(b);
+    }
+
 }
