@@ -61,7 +61,7 @@ public class ValidateCodeUtils {
      */
     private static void drawBackground(Graphics g, int w, int h) {
         // 填充背景
-        g.setColor(getRandColor(220, 250));
+//        g.setColor(getRandColor(220, 250));
         g.fillRect(0, 0, w, h);
         // 加入干扰线条
         for (int i = 0; i < 8; i++) {
