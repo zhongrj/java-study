@@ -1,12 +1,11 @@
 package zrj.study.util.image;
 
-import org.bouncycastle.LICENSE;
 import zrj.study.util.validate.ValidateCodeUtils;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -15,32 +14,130 @@ import java.util.List;
  */
 public class Test {
 
-    private static final BufferedImage[] IMAGES_DATA = new BufferedImage[10];
-    private static final double ISOLATED_COEFFICIENT = 0.01;
+    private static final Map<BufferedImage, String> IMAGES_DATA = new HashMap<>();
+    private static final double ISOLATED_COEFFICIENT = 0.02;
 
 
     public static void main(String[] args) {
-        List imgList = new ArrayList<BufferedImage>();
-        BufferedImage img, twoColorImg, onlyStringImg, trimedImg;
 
+        prepareData();
+//        showImg(IMAGES_DATA.keySet());
+
+
+        List<BufferedImage> imgList = new ArrayList<>();
+        BufferedImage img, twoColorImg, onlyStringImg, onlyOriginString;
+        List<BufferedImage> imgsSplited, imgsSplitedTrimed, imgsMatchMost;
+
+        int len = 4;
         // 创建随机验证码
-        imgList.add(img = ValidateCodeUtils.createImage("123", 120, 70));
+        imgList.add(img = ValidateCodeUtils.createImage(ValidateCodeUtils.createRandomCode(len), 50*len, 70));
         // 图片二值化
         imgList.add(twoColorImg = getBlackOrWhiteImg(img));
         // 去除孤立点
         imgList.add(onlyStringImg = rmIsolated(twoColorImg));
+        imgList.add(onlyStringImg = rmIsolated(onlyStringImg));
+        imgList.add(onlyStringImg = rmIsolated(onlyStringImg));
+        // 原图只留下有效部分
+        imgList.add(onlyOriginString = keepStringOnly(img, onlyStringImg));
+        // 分隔有效部分
+        imgList.addAll(imgsSplited = splitImgByColor(onlyOriginString));
         // 去除无用边界
-        imgList.add(trimedImg = trim(onlyStringImg));
-        // 分割为单字符图
+        imgList.addAll(imgsSplitedTrimed = trim(imgsSplited));
 
-//        // 去除无用边界
-//        BufferedImage trimedImg = trim(onlyStringImg);
+        // 比对
+        imgList.addAll(imgsMatchMost = findImg(imgsSplitedTrimed));
+
+
+        System.out.println("识别为：");
+        for (BufferedImage image : imgsMatchMost) {
+            System.out.print(IMAGES_DATA.get(image));
+        }
 
         showImg(imgList);
 
+    }
 
-//        prepareData();
-//        showImg(IMAGES_DATA);
+    private static List<BufferedImage> findImg(List<BufferedImage> imgsSplitedTrimed) {
+        List<BufferedImage> list = new ArrayList<>();
+        for (BufferedImage img : imgsSplitedTrimed) {
+            double maxRate = 0.0;
+            BufferedImage target = null;
+            for (BufferedImage source : IMAGES_DATA.keySet()) {
+                double thisRate = getLikelyRate(img, source);
+                if (thisRate > maxRate) {
+                    maxRate = thisRate;
+                    target = source;
+                }
+            }
+            list.add(target);
+        }
+        return list;
+    }
+
+    private static double getLikelyRate(BufferedImage img, BufferedImage source) {
+        double width = source.getWidth();
+        double height = source.getHeight();
+        double xr = (img.getWidth() - 1) / (width - 1);
+        double yr = (img.getHeight() - 1) / (height - 1);
+        double same = 0;
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (source.getRGB(x, y) == img.getRGB((int) (x * xr), (int) (y * yr))) {
+                    same++;
+                }
+            }
+        }
+        return same / width / height;
+    }
+
+    private static List<BufferedImage> splitImgByColor(BufferedImage onlyOriginString) {
+        // 以同一颜色分割
+        List<BufferedImage> list = new ArrayList();
+        Map<Integer, BufferedImage> map = new HashMap<>();
+        Map<Integer, Integer> colorCount = new HashMap<>();
+        int width = onlyOriginString.getWidth();
+        int height = onlyOriginString.getHeight();
+        int all = width * height;
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                int rgb = onlyOriginString.getRGB(x, y);
+                if (Color.BLACK.getRGB() == rgb) {
+                    continue;
+                }
+                BufferedImage img = map.get(rgb);
+                if (null == img) {
+                    img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+                    list.add(img);
+                    map.put(rgb, img);
+                    colorCount.put(rgb, 0);
+                }
+                colorCount.put(rgb, colorCount.get(rgb) + 1);
+                img.setRGB(x, y, Color.WHITE.getRGB());
+            }
+        }
+        for (int i : colorCount.keySet()) {
+            if (colorCount.get(i) < all * 0.02) {
+                list.remove(map.get(i));
+            }
+        }
+        map = null;
+        colorCount = null;
+        return list;
+    }
+
+
+    private static BufferedImage keepStringOnly(BufferedImage img, BufferedImage onlyStringImg) {
+        int width = img.getWidth();
+        int height = img.getHeight();
+        BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (Color.WHITE.getRGB() == onlyStringImg.getRGB(x, y)){
+                    result.setRGB(x, y, img.getRGB(x, y));
+                }
+            }
+        }
+        return result;
     }
 
 
@@ -52,8 +149,6 @@ public class Test {
             for (int y = 0; y < height; y++) {
                 if (isWhite(img.getRGB(x, y))) {
                     result.setRGB(x, y, Color.WHITE.getRGB());
-                } else {
-                    result.setRGB(x, y, Color.BLACK.getRGB());
                 }
             }
         }
@@ -62,11 +157,11 @@ public class Test {
 
     private static boolean isWhite(int rgb) {
         Color color = new Color(rgb);
-        return (color.getRed() + color.getGreen() + color.getBlue() > 500);
+        return (color.getRed() + color.getGreen() + color.getBlue() < 500);
     }
 
 
-    public static void showImg(List<BufferedImage> imgs) {
+    public static void showImg(Collection<BufferedImage> imgs) {
         JFrame frame = new JFrame("展示图片");
         frame.setSize(500, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,17 +179,32 @@ public class Test {
      */
     public static void prepareData() {
         int w = 100, h = 100;
-
-        for (int i = 0; i < IMAGES_DATA.length; i++) {
-            BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-            Graphics g = img.getGraphics();
-            g.fillRect(0, 0, w, h);
-            g.setColor(Color.BLACK);
-            g.setFont(new Font("Arial", Font.BOLD, w));
-            g.drawString(String.valueOf(i), 0, 100);
-            img = trim(img);
-            IMAGES_DATA[i] = img;
+        char[] code_array = ValidateCodeUtils.CODE_ARRAY;
+        for (int i = 0; i < code_array.length; i++) {
+            String str = String.valueOf(code_array[i]);
+            IMAGES_DATA.put(getImg(w, h, str, "Arial"), str);
+            IMAGES_DATA.put(getImg(w, h, str, "Calibri"), str);
+            IMAGES_DATA.put(getImg(w, h, str, "Arial Black"), str);
         }
+    }
+
+    private static BufferedImage getImg(int w, int h, String str, String font) {
+        BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+        Graphics g = img.getGraphics();
+        g.setColor(Color.WHITE);
+        g.setFont(new Font(font, Font.BOLD, w));
+        g.drawString(str, 0, h);
+        img = trim(img);
+        return img;
+    }
+
+
+    private static List<BufferedImage> trim(Collection<BufferedImage> c) {
+        List<BufferedImage> list = new ArrayList<>();
+        for (BufferedImage img : c) {
+            list.add(trim(img));
+        }
+        return list;
     }
 
     /**
@@ -147,9 +257,7 @@ public class Test {
         BufferedImage result = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         for (int x = 0; x < width; x++) {
             for (int y = 0; y < height; y++) {
-                if (isIsolated(img, x, y, dx, dy)) {
-                    result.setRGB(x, y, Color.WHITE.getRGB());
-                } else {
+                if (!isIsolated(img, x, y, dx, dy)) {
                     result.setRGB(x, y, img.getRGB(x, y));
                 }
             }
@@ -167,7 +275,6 @@ public class Test {
 //            return true;
 //        }
         int w = img.getWidth(), h = img.getHeight();
-        Color BLACK = Color.BLACK;
         int x1 = x - dx, x2 = x + dx,
                 y1 = y - dy, y2 = y + dy;
         x1 = (x1 < 0) ? x : x1;
@@ -175,15 +282,18 @@ public class Test {
         x2 = (x2 >= w) ? x : x2;
         y2 = (y2 >= h) ? y : y2;
 
-        return !(BLACK.equals(new Color(img.getRGB(x1, y1)))
-                && BLACK.equals(new Color(img.getRGB(x1, y)))
-                && BLACK.equals(new Color(img.getRGB(x1, y2)))
-                && BLACK.equals(new Color(img.getRGB(x, y1)))
-                && BLACK.equals(new Color(img.getRGB(x, y)))
-                && BLACK.equals(new Color(img.getRGB(x, y2)))
-                && BLACK.equals(new Color(img.getRGB(x2, y1)))
-                && BLACK.equals(new Color(img.getRGB(x2, y)))
-                && BLACK.equals(new Color(img.getRGB(x2, y2))));
+        int i = 0;
+        if (Color.WHITE.getRGB() == img.getRGB(x1, y1)) i++;
+        if (Color.WHITE.getRGB() == img.getRGB(x1, y)) i++;
+        if (Color.WHITE.getRGB() == img.getRGB(x1, y2)) i++;
+        if (Color.WHITE.getRGB() == img.getRGB(x, y1)) i++;
+        if (Color.WHITE.getRGB() == img.getRGB(x, y)) i++;
+        if (Color.WHITE.getRGB() == img.getRGB(x, y2)) i++;
+        if (Color.WHITE.getRGB() == img.getRGB(x2, y1)) i++;
+        if (Color.WHITE.getRGB() == img.getRGB(x2, y)) i++;
+        if (Color.WHITE.getRGB() == img.getRGB(x2, y2)) i++;
+
+        return i < 5;
     }
 
 
