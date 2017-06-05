@@ -78,7 +78,13 @@ public class Test {
     @org.junit.Test
     public void hashMapTest() {
         Map map = new HashMap();
+    }
 
+    @org.junit.Test
+    public void listTest() {
+        List list = Arrays.asList(new Integer[]{1, 2, 3});
+        System.out.println(list);
+        System.out.println(list.get(2));
     }
 
 }
