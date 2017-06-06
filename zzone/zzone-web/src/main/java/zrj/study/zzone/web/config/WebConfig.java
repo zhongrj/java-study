@@ -1,4 +1,4 @@
-package zrj.study.zzone.web.common.config;
+package zrj.study.zzone.web.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,7 +31,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**");
         registry.addInterceptor(authInterceptor()).addPathPatterns("/**")
-                .excludePathPatterns("/test/*")
+                .excludePathPatterns("/test/**")
                 .excludePathPatterns("/login")
                 .excludePathPatterns("/register")
                 .excludePathPatterns("/key/get")

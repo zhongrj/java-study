@@ -28,12 +28,12 @@
 
     <logger name="zrj.study.zzone" level="DEUBG" additivity="false">
         <appender-ref ref="stdoutAppender" />
-        <!--<appender-ref ref="fileAppender"/>-->
+        <appender-ref ref="fileAppender"/>
     </logger>
 
     <root level="INFO">
         <appender-ref ref="stdoutAppender"/>
-        <!--<appender-ref ref="fileAppender"/>-->
+        <appender-ref ref="fileAppender"/>
     </root>
 
 </configuration>

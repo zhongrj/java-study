@@ -19,7 +19,7 @@ import java.util.Date;
 @Transactional(readOnly = true)
 public class SessionService extends BaseService {
 
-    private static final long ONE_WEEK = 1L * 7 * 24 * 60 * 60 * 1000;
+    private static final long ONE_DAY = 1L * 24 * 60 * 60 * 1000;
 
     @Autowired
     private SessionDao sessionDao;
@@ -31,7 +31,7 @@ public class SessionService extends BaseService {
         session.preInsert();
         session.setToken(token);
         session.setUserId(user.getId());
-        session.setExpireDate(new Date(System.currentTimeMillis() + ONE_WEEK));
+        session.setExpireDate(new Date(System.currentTimeMillis() + ONE_DAY));
         sessionDao.insert(session);
         return token;
     }

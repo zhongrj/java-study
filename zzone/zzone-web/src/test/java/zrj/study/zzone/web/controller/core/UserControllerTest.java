@@ -29,8 +29,8 @@ public class UserControllerTest extends BaseControllerTest {
         user.setAccount("aaa");
         user.setPassword(encryptUseBCBase64("123123", rsaKey.getRsaPublicKey()));
         user.setName("测试注册");
-        user.setMobile("13606161711");
-        user.setEmail("123123123@w.sl");
+        user.setMobile("13660677123");
+        user.setEmail("329053269@pp.com");
         userModel.setUser(user);
 
         postJsonUnlogin("/register", userModel);

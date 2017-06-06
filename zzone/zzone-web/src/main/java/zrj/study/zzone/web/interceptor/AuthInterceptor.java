@@ -10,6 +10,7 @@ import zrj.study.zzone.web.model.Result;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.regex.Pattern;
 
 /**
  * 权限拦截器
@@ -37,8 +38,14 @@ public class AuthInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        request.setAttribute("user", user);
+        // /console/**路径需要管理员用户
+        if (Pattern.matches("/console/.*", request.getRequestURI())) {
+            if (!User.TYPE_ADMIN.equals(user.getType())) {
+                RenderUtils.renderString(response, Result.UNAUTH);
+            }
+        }
 
+        request.setAttribute("user", user);
         return true;
     }
 

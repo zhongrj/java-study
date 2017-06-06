@@ -57,8 +57,8 @@ public class BaseControllerTest {
     private String token;
     protected String macId = "00";
     protected String source = "web";
-    protected String account = "admin";
-    protected String password = "admin";
+    protected String account = "user";
+    protected String password = "user";
 
     @Autowired
     private MockMvc mockMvc;
@@ -69,40 +69,88 @@ public class BaseControllerTest {
     @Autowired
     private KeyService keyService;
 
+    /**
+     * 为model添加全局参数
+     *
+     * @param model model
+     */
     protected void initBaseModel(BaseModel model) {
         model.setMacId(macId);
         model.setSource(source);
     }
 
+    /**
+     * 设为管理员
+     */
+    protected void suAdmin() {
+        account = "admin";
+        password = "admin";
+    }
+
+    /**
+     * 登录(带token) post请求
+     *
+     * @param url    url
+     * @param object 请求实体
+     * @return ResultActions
+     */
     protected ResultActions postJsonLogin(String url, Object object) throws Exception {
         if (StringUtils.isBlank(token)) {
             login();
         }
-        return postJsonUnlogin(url, object);
-    }
-
-    protected ResultActions postJsonUnlogin(String url, Object object) throws Exception {
-        return postJsonUnloginIgnoreCode(url, object)
+        MockHttpServletRequestBuilder configureRequest = getBaseRequestBuilder(url, object);
+        configureRequest.header("token", token);
+        return this.mockMvc.perform(configureRequest)
+                .andDo(print()).andExpect(status().isOk())
                 .andExpect(jsonPath("$.code").value(Result.SUCCESS));
     }
 
-    protected ResultActions postJsonUnloginIgnoreCode(String url, Object object) throws Exception {
-        MockHttpServletRequestBuilder configureRequest = post(url)
+    /**
+     * 不登录(不带token) post请求
+     *
+     * @param url    url
+     * @param object 请求实体
+     * @return ResultActions
+     */
+    protected ResultActions postJsonUnlogin(String url, Object object) throws Exception {
+        return this.mockMvc.perform(getBaseRequestBuilder(url, object))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(Result.SUCCESS));
+    }
+
+    /**
+     * 不登录(不带token) 且 不校验响应code post请求
+     *
+     * @param url    url
+     * @param object 请求实体
+     * @return ResultActions
+     */
+    protected ResultActions postJsonSimply(String url, Object object) throws Exception {
+        MockHttpServletRequestBuilder configureRequest = getBaseRequestBuilder(url, object);
+        return this.mockMvc.perform(configureRequest).andExpect(status().isOk());
+    }
+
+    /**
+     * 获得基础requestBuilder
+     */
+    private MockHttpServletRequestBuilder getBaseRequestBuilder(String url, Object object) throws Exception {
+        return post(url)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(null != object ? JsonUtils.toJsonString(object) : "");
-        if (StringUtils.isNotBlank(token)) {
-            configureRequest.header("token", token);
-        }
-        return this.mockMvc.perform(configureRequest)
-                .andDo(print()).andExpect(status().isOk());
     }
 
+    /**
+     * 将响应json转为Result
+     *
+     * @param resultActions 响应action
+     * @return Result
+     */
     protected Result getResult(ResultActions resultActions) throws IOException {
         return JsonUtils.parseToObject(resultActions.andReturn().getResponse().getContentAsString(), Result.class);
     }
 
-    @Test
+    //    @Test
     public void login() throws Exception {
         UserModel userModel = new UserModel();
         initBaseModel(userModel);
@@ -116,6 +164,9 @@ public class BaseControllerTest {
         token = content.get("token").toString();
     }
 
+    /**
+     * 发送并获取验证码String
+     */
     protected String getCodeTxt() throws Exception {
         CodeModel codeModel = new CodeModel();
         initBaseModel(codeModel);
@@ -123,15 +174,21 @@ public class BaseControllerTest {
         code.setHeight(100);
         code.setWidth(100);
         codeModel.setCode(code);
-        postJsonUnloginIgnoreCode("/code/get", codeModel);
+        postJsonSimply("/code/get", codeModel);
         return codeService.getCode(macId);
     }
 
 
+    /**
+     * 发送并获取rsa密钥（从keyService中获取）
+     */
     protected RSAKey getKey() throws Exception {
         return keyService.get(getFrontKey().get("keyId").toString());
     }
 
+    /**
+     * 发送并获取rsa公钥
+     */
     protected Map getFrontKey() throws Exception {
         BaseModel baseModel = new BaseModel();
         initBaseModel(baseModel);
@@ -139,39 +196,24 @@ public class BaseControllerTest {
         return (Map) getResult(resultActions).getContent();
     }
 
+    /**
+     * 使用rsa公钥加密
+     *
+     * @param srcText 明文
+     * @param pubKey  公钥
+     * @return 密文
+     */
     protected String encryptUseBCBase64(String srcText, RSAPublicKey pubKey) throws Exception {
         byte[] encryptedDataBC = RSAUtils.encryptUseBC(srcText.getBytes("UTF-8"), pubKey);
         return Base64.getEncoder().encodeToString(encryptedDataBC);
     }
 
 
-
-
-    @Test
+    //    @Test
     public void hello() throws Exception {
         postJsonLogin("/hello", null);
     }
 
-    @Test
-    public void code() throws Exception {
-        System.out.println(getCodeTxt());
-    }
-
-    @Test
-    public void key() throws Exception {
-        Map key = getFrontKey();
-
-        String srcText = "钟如劼";
-        byte[] pubKey = Base64.getDecoder().decode(key.get("pubKey").toString());
-        // 加密useBC
-        byte[] encryptedDataBC = RSAUtils.encryptUseBC(srcText.getBytes("UTF-8"), pubKey);
-
-        // 解密useBC
-        RSAKey priKey = keyService.get(key.get("keyId").toString());
-        byte[] srcDataBC = RSAUtils.decryptUseBC(encryptedDataBC, priKey.getRsaPrivateKey());
-
-        Assert.assertEquals(srcText, new String(srcDataBC, "UTF-8"));
-    }
 
     @MockBean
     private MockTest test;

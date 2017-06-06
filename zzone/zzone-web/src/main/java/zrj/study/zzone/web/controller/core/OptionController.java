@@ -10,7 +10,7 @@ import zrj.study.zzone.web.model.Result;
 import zrj.study.zzone.web.model.core.OptionModel;
 
 /**
- * 选项卡
+ * 选项卡Controller
  *
  * @author zhongrj
  * @email 329053269@qq.com

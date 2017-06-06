@@ -7,12 +7,14 @@ package zrj.study.zzone.web.model;
  */
 public class Result {
 
-    /** 状体码 **/
+    /** 状态码 **/
     public static final String SUCCESS = "0000";
     public static final String FAILURE = "9999";
 
     /** 常用 **/
     public static final Result UNLOGIN = new Result("9998", "会话超时");
+    public static final Result UNAUTH = new Result("9997", "用户无权限");
+
     public static final Result WRONG_DATA = new Result(FAILURE, "数据格式错误");
     public static final Result EXCEPTION = new Result(FAILURE, "系统异常");
 

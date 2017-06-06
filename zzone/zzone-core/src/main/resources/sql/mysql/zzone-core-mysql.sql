@@ -40,7 +40,7 @@ CREATE TABLE `core_user` (
   `name` varchar(50) DEFAULT NULL COMMENT '用户昵称',
   `mobile` varchar(50) DEFAULT NULL COMMENT '手机',
   `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
-  `type` int(5) DEFAULT NULL COMMENT '用户类型 0普通用户 1会员用户',
+  `type` int(5) DEFAULT NULL COMMENT '用户类型 0普通用户 1会员用户 9管理用户',
   `status` int(5) DEFAULT NULL COMMENT '用户状态 0正常 1冻结 2黑名单',
   `create_date` datetime NOT NULL COMMENT '创建时间',
   `update_date` datetime NOT NULL COMMENT '更新时间',
@@ -56,7 +56,7 @@ CREATE VIEW `core_user_basic` AS select `core_user`.`id` AS `id`,`core_user`.`ac
 -- ----------------------------
 -- Records of core_user
 -- ----------------------------
-INSERT INTO `core_user` VALUES ('0a27d82c021e456fb8b4f9e0fe343c1c', 'admin', 'admin', '超级管理员', '13660677179', '329063269@qq.com', '0', '0', '2017-04-27 16:10:40', '2017-04-27 16:10:40', '0');
+INSERT INTO `core_user` VALUES ('0a27d82c021e456fb8b4f9e0fe343c1c', 'admin', 'admin', '超级管理员', '13660677179', '329063269@qq.com', '9', '0', '2017-04-27 16:10:40', '2017-04-27 16:10:40', '0');
 
 
 
