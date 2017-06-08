@@ -8,13 +8,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 import org.springframework.transaction.annotation.Transactional;
 import zrj.study.util.json.JsonUtils;
 import zrj.study.util.security.RSAUtils;
@@ -31,11 +34,13 @@ import zrj.study.zzone.web.model.core.CodeModel;
 import zrj.study.zzone.web.model.core.UserModel;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Base64;
 import java.util.Map;
 
 import static org.mockito.BDDMockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -206,6 +211,23 @@ public class BaseControllerTest {
     protected String encryptUseBCBase64(String srcText, RSAPublicKey pubKey) throws Exception {
         byte[] encryptedDataBC = RSAUtils.encryptUseBC(srcText.getBytes("UTF-8"), pubKey);
         return Base64.getEncoder().encodeToString(encryptedDataBC);
+    }
+
+    /**
+     * 上传文件
+     * @param fileClasspath 文件路径（基于classpath）
+     * @return 响应
+     */
+    public Result uploadFile(String uploadUri, String fileClasspath, String fileName) throws Exception {
+        MockMultipartHttpServletRequestBuilder requestBuilder = fileUpload(uploadUri);
+        InputStream is = new ClassPathResource(fileClasspath).getInputStream();
+        requestBuilder.file(new MockMultipartFile("images", fileName, null, is));
+
+        ResultActions resultActions = mockMvc.perform(requestBuilder)
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(jsonPath("$.code").value(Result.SUCCESS));
+
+        return getResult(resultActions);
     }
 
 

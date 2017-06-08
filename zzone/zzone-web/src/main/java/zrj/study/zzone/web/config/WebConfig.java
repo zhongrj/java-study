@@ -38,7 +38,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/register")
                 .excludePathPatterns("/key/get")
                 .excludePathPatterns("/code/get")
-                .excludePathPatterns("/upload/image")
+                .excludePathPatterns("/upload/image")                   // temp
+                .excludePathPatterns("/download/image")                 // temp
                 .excludePathPatterns("/option/get");
         super.addInterceptors(registry);
     }
