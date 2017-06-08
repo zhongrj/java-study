@@ -1,6 +1,6 @@
 package zrj.study.zzone.core.dao;
 
-import zrj.study.zzone.core.entity.Option;
+import zrj.study.zzone.core.entity.Dict;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import java.util.List;
  * @email 329053269@qq.com
  * @date 2017/5/2
  */
-public interface OptionDao extends BaseDao<Option> {
+public interface DictDao extends BaseDao<Dict> {
 
-    List<Option> getList(String type);
+    List<Dict> getList(String type);
 
 }

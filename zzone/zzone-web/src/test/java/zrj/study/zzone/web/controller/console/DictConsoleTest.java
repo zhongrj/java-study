@@ -8,12 +8,12 @@ import zrj.study.zzone.web.controller.BaseControllerTest;
  * @email 329053269@qq.com
  * @date 2017/6/6
  */
-public class OptionConsoleTest extends BaseControllerTest {
+public class DictConsoleTest extends BaseControllerTest {
 
     @Test
     public void add() throws Exception {
         suAdmin();
-        postJsonLogin("/console/option/add", null);
+        postJsonLogin("/console/dict/add", null);
     }
 
 

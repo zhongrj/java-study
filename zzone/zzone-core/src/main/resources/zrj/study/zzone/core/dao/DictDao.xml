@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="zrj.study.zzone.core.dao.OptionDao">
+<mapper namespace="zrj.study.zzone.core.dao.DictDao">
 
     <!-- 根据类型查找选项卡 -->
-    <select id="getList" resultType="Option">
+    <select id="getList" resultType="Dict">
         SELECT
             *
-        FROM core_option o
+        FROM core_dict o
         WHERE o.del_flag = 0 AND o.type = #{type}
     </select>
 

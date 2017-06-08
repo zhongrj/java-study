@@ -1,6 +1,7 @@
 package zrj.study.zzone.core.service;
 
 import org.springframework.stereotype.Service;
+import zrj.study.util.io.IOUtils;
 import zrj.study.util.validate.ValidateCodeUtils;
 import zrj.study.zzone.core.common.cache.CacheManage;
 import zrj.study.zzone.core.common.exception.ZzoneException;
@@ -38,21 +39,15 @@ public class CodeService {
 
 
 
-    public void sendCodeImage(String macId, Code code, OutputStream os) {
+    public void sendCodeImage(String macId, Code code, OutputStream os) throws IOException {
         String codeTxt = ValidateCodeUtils.createRandomCode(4);
         BufferedImage image = ValidateCodeUtils.createImage(codeTxt, code.getWidth(), code.getHeight());
         getCodeMap().put(macId, codeTxt);
 
         try {
             ImageIO.write(image, "JPEG", os);
-        } catch (IOException e) {
-            throw new ZzoneException("IO异常", e);
         } finally {
-            try {
-                os.close();
-            } catch (IOException e) {
-                throw new ZzoneException("IO异常", e);
-            }
+            os.close();
         }
     }
 

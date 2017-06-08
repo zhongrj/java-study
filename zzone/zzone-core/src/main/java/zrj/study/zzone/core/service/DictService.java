@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zrj.study.util.string.StringUtils;
-import zrj.study.zzone.core.dao.OptionDao;
-import zrj.study.zzone.core.entity.Option;
+import zrj.study.zzone.core.dao.DictDao;
+import zrj.study.zzone.core.entity.Dict;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 选项卡Service
+ * 字典Service
  *
  * @author zhongrj
  * @email 329053269@qq.com
@@ -20,23 +20,26 @@ import java.util.Map;
  */
 @Service
 @Transactional(readOnly = true)
-public class OptionService {
+public class DictService {
 
     @Autowired
-    private OptionDao optionDao;
+    private DictDao dictDao;
 
-    public List<Option> getOptionByType(String type) {
-        return optionDao.getList(type);
+    public List<Dict> getDictByType(String type) {
+        return dictDao.getList(type);
     }
 
-    public Map<String, List<Option>> getOptionByTypes(String types) {
-        Map<String, List<Option>> options = new HashMap<>();
+    /**
+     * @param types 以,分隔多个type
+     */
+    public Map<String, List<Dict>> getDictByTypes(String types) {
+        Map<String, List<Dict>> dicts = new HashMap<>();
         if (StringUtils.isNotBlank(types)){
             for (String type : types.split("\\s*,\\s*")) {
-                options.put(type, getOptionByType(type));
+                dicts.put(type, getDictByType(type));
             }
         }
-        return options;
+        return dicts;
     }
 
 }

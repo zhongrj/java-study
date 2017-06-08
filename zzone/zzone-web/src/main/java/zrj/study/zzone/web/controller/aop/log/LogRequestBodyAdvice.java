@@ -26,7 +26,6 @@ public class LogRequestBodyAdvice implements RequestBodyAdvice {
     private Logger logger = LoggerFactory.getLogger(LogRequestBodyAdvice.class);
 
     @Override
-
     public boolean supports(MethodParameter methodParameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
         return true;
     }

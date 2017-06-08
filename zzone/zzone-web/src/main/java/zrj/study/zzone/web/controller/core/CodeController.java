@@ -32,18 +32,15 @@ public class CodeController extends BaseController {
      * 获取验证码
      */
     @RequestMapping("get")
-    public void get(@RequestBody @Valid CodeModel codeModel, HttpServletResponse response) {
+    public void get(@RequestBody @Valid CodeModel codeModel, HttpServletResponse response) throws Exception {
+
+        codeService.sendCodeImage(codeModel.getMacId(), codeModel.getCode(), response.getOutputStream());
 
         response.setHeader("Pragma", "no-cache");
         response.setHeader("Cache-Control", "no-cache");
         response.setDateHeader("Expires", 0);
         response.setContentType("image/jpeg");
 
-        try {
-            codeService.sendCodeImage(codeModel.getMacId(), codeModel.getCode(), response.getOutputStream());
-        } catch (IOException e) {
-            throw new ZzoneException("IO异常");
-        }
     }
 
 }

@@ -3,6 +3,7 @@ package zrj.study.zzone.core.entity;
 import java.util.Date;
 
 /**
+ * 会话
  * @author zhongrj
  * @email 329053269@qq.com
  * @date 2017/4/20

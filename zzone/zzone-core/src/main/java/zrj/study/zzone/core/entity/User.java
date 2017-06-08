@@ -1,9 +1,9 @@
 package zrj.study.zzone.core.entity;
 
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 /**
+ * 用户
  * @author zhongrj
  * @email 329053269@qq.com
  * @date 2017/4/19

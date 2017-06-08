@@ -5,6 +5,7 @@ import org.hsqldb.jdbc.JDBCDriver;
 import org.hsqldb.server.Server;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
@@ -15,13 +16,10 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.TransactionManagementConfigurer;
+import zrj.study.util.io.IOUtils;
 
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
-import java.util.Properties;
 
 /**
  * 核心模块配置
@@ -34,14 +32,11 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource("classpath:/zzone-core.properties")
 @MapperScan(basePackages = "zrj.study.zzone.core.dao")
-@ComponentScan(basePackages = "zrj.study.zzone.core.service")
-public class CoreConfig implements TransactionManagementConfigurer {
+@ComponentScan(basePackages = {"zrj.study.zzone.core.service", "zrj.study.zzone.core.common.aware"})
+public class CoreConfig {
 
     @Autowired
     private Environment env;
-
-    @Autowired
-    private DataSource dataSource;
 
     @Bean
     @Profile("dev-back")
@@ -68,8 +63,8 @@ public class CoreConfig implements TransactionManagementConfigurer {
         dataSource.setPassword("");
         Connection conn = dataSource.getConnection();
         Statement stmt = conn.createStatement();
-        stmt.executeQuery(getStringFromPath("sql/hsql/zzone-core-tab-hsql.sql"));
-        stmt.executeQuery(getStringFromPath("sql/hsql/zzone-core-data-hsql.sql"));
+        stmt.executeQuery(IOUtils.getContent(new ClassPathResource("sql/hsql/zzone-core-tab-hsql.sql").getInputStream(), "utf-8"));
+        stmt.executeQuery(IOUtils.getContent(new ClassPathResource("sql/hsql/zzone-core-data-hsql.sql").getInputStream(), "utf-8"));
         return dataSource;
 
 //        return new EmbeddedDatabaseBuilder()
@@ -78,29 +73,18 @@ public class CoreConfig implements TransactionManagementConfigurer {
 //                .build();
     }
 
-    private String getStringFromPath(String path) throws IOException {
-        StringBuffer sb = new StringBuffer();
-        InputStream is = new ClassPathResource(path).getInputStream();
-        byte[] bytes = new byte[1024];
-        int i = 0;
-        while ((i = is.read(bytes)) > 0) {
-            sb.append(new String(bytes, 0, i));
-        }
-        return sb.toString();
-    }
-
     @Bean
-    public SqlSessionFactoryBean sqlSessionFactory() throws Exception {
+    public SqlSessionFactoryBean sqlSessionFactory(@Autowired DataSource dataSource) throws Exception {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource);
+        sessionFactory.setConfigLocation(new ClassPathResource("xml/mybatis-config.xml"));
         sessionFactory.setTypeAliasesPackage("zrj.study.zzone");
-//        sessionFactory.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/zrj/study/zzone/*/dao/*.xml"));
+        sessionFactory.setDataSource(dataSource);
+        sessionFactory.setVfs(SpringBootVFS.class);                 // 解决对jar包扫描alias类时的尴尬
         return sessionFactory;
     }
 
     @Bean
-    @Override
-    public PlatformTransactionManager annotationDrivenTransactionManager() {
+    public PlatformTransactionManager annotationDrivenTransactionManager(@Autowired DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 

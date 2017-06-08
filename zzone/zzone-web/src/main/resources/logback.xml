@@ -9,9 +9,9 @@
 
     <!-- 日志输出 -->
     <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>/home/logs/zzone.log</file>
+        <file>/home/zzone/logs/zzone.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>/home/logs/zzone.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>/home/zzone/logs/zzone.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- 保留 30 天 -->
             <maxHistory>30</maxHistory>
             <!-- 每个日志文件最大 1G -->

@@ -6,6 +6,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import zrj.study.zzone.core.common.exception.ZzoneException;
 import zrj.study.zzone.web.model.Result;
 
@@ -15,6 +16,7 @@ import zrj.study.zzone.web.model.Result;
  * @date 2017/6/6
  */
 @ControllerAdvice
+//@ResponseBody
 public class ExceptionAdvice {
 
     private Logger logger = LoggerFactory.getLogger(ExceptionAdvice.class);

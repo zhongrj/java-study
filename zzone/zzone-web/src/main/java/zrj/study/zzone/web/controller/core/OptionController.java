@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import zrj.study.zzone.core.service.OptionService;
+import zrj.study.zzone.core.service.DictService;
 import zrj.study.zzone.web.controller.BaseController;
 import zrj.study.zzone.web.model.Result;
 import zrj.study.zzone.web.model.core.OptionModel;
@@ -21,11 +21,11 @@ import zrj.study.zzone.web.model.core.OptionModel;
 public class OptionController extends BaseController {
 
     @Autowired
-    private OptionService optionService;
+    private DictService dictService;
 
     @RequestMapping("get")
     public Result get(@RequestBody OptionModel optionModel) {
-        return new Result(Result.SUCCESS, "获取选项卡成功", optionService.getOptionByTypes(optionModel.getTypes()));
+        return new Result(Result.SUCCESS, "获取选项卡成功", dictService.getDictByTypes(optionModel.getTypes()));
     }
 
 }

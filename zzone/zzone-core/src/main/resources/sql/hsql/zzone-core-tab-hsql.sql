@@ -32,10 +32,10 @@ CREATE TABLE core_user (
 
 
 -- ----------------------------
--- Table structure for core_option
+-- Table structure for core_dict
 -- ----------------------------
-DROP TABLE IF EXISTS core_option;
-CREATE TABLE core_option (
+DROP TABLE IF EXISTS core_dict;
+CREATE TABLE core_dict (
   label varchar(100),
   value varchar(100),
   type varchar(100),

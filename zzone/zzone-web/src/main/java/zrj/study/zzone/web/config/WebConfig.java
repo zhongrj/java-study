@@ -1,9 +1,11 @@
 package zrj.study.zzone.web.config;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import zrj.study.zzone.core.common.config.CoreConfig;
@@ -36,8 +38,16 @@ public class WebConfig extends WebMvcConfigurerAdapter {
                 .excludePathPatterns("/register")
                 .excludePathPatterns("/key/get")
                 .excludePathPatterns("/code/get")
+                .excludePathPatterns("/upload/image")
                 .excludePathPatterns("/option/get");
         super.addInterceptors(registry);
+    }
+
+    @Bean
+    public FilterRegistrationBean characterEncodingFilter() {
+        FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
+        filterRegistrationBean.setFilter(new CharacterEncodingFilter("UTF-8"));
+        return filterRegistrationBean;
     }
 
 

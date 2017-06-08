@@ -1,11 +1,12 @@
 package zrj.study.zzone.core.entity;
 
 /**
+ * 字典
  * @author zhongrj
  * @email 329053269@qq.com
  * @date 2017/5/2
  */
-public class Option extends BaseEntity{
+public class Dict extends BaseEntity{
 
     private String label;
     private String value;

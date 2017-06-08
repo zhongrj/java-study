@@ -3,13 +3,16 @@
 spring:
   jackson:
     default-property-inclusion: non_null # 生成json忽略null值
+  http:
+    multipart:
+      max-file-size: "10MB"
 
-
+server:
+  port: 8080
+logging:
+  config: classpath:logback.xml
 
 
 zzone-web:
   securety: true # true开启加解密 false关闭加解密
-
-
-
 

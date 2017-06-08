@@ -1,6 +1,7 @@
 package zrj.study.zzone.core.entity;
 
 /**
+ * 验证码
  * @author zhongrj
  * @email 329053269@qq.com
  * @date 2017/4/27
