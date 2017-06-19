@@ -28,6 +28,8 @@
         <module>zzone-web</module>
         <module>zzone-core</module>
         <module>zzone-chat</module>
+        <module>zzone-community</module>
+        <module>zzone-portal</module>
     </modules>
 
 
