@@ -16,7 +16,7 @@ import zrj.study.zzone.web.model.Result;
  * @date 2017/6/6
  */
 @RestController
-@RequestMapping("letter")
+@RequestMapping("/core/letter/")
 public class LetterController extends BaseController {
 
     @Autowired

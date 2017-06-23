@@ -30,7 +30,7 @@ public class UserService extends BaseService {
     SessionService sessionService;
 
     @Transactional
-    public String login(User user) {
+    public User login(User user) {
 
         user = userDao.get(user);
 
@@ -46,8 +46,9 @@ public class UserService extends BaseService {
         }
 
         String token = sessionService.addSession(user);
+        user.setToken(token);
 
-        return token;
+        return user;
     }
 
     @Transactional

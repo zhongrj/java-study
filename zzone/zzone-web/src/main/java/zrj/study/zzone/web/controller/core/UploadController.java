@@ -19,7 +19,7 @@ import java.util.Map;
  * @date 2017/6/7
  */
 @RestController
-@RequestMapping("/upload/")
+@RequestMapping("/core/upload/")
 public class UploadController {
 
     @Autowired

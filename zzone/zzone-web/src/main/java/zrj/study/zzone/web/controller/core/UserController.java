@@ -24,6 +24,7 @@ import java.util.Map;
  * @date 2017/4/19
  */
 @RestController
+@RequestMapping("/core/user/")
 public class UserController extends BaseController {
 
     @Autowired
@@ -37,9 +38,8 @@ public class UserController extends BaseController {
 
     @RequestMapping("/login")
     public Result login(@RequestBody @Valid UserModel userModel) {
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("token", userService.login(userModel.getUser()));
-        return new Result(Result.SUCCESS, "登录成功", resultMap); // 可多个设备同时登陆, 一个用户可对应多个token
+        User user = userService.login(userModel.getUser());
+        return new Result(Result.SUCCESS, "登录成功", user); // 可多个设备同时登陆, 一个用户可对应多个token
     }
 
     @RequestMapping("/register")
@@ -63,9 +63,9 @@ public class UserController extends BaseController {
         return new Result(Result.SUCCESS, "注册成功");
     }
 
-    @RequestMapping("/hello")
-    public Result hello(@RequestAttribute("user") User user) {
-        return new Result(Result.SUCCESS, "你好, " + user.getName(), user);
+    @RequestMapping("/info")
+    public Result info(@RequestAttribute("user") User user) {
+        return new Result(Result.SUCCESS, "获取用户信息成功", user);
     }
 
 

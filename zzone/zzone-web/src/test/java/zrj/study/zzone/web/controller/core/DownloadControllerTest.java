@@ -27,12 +27,12 @@ public class DownloadControllerTest extends BaseControllerTest {
     @Test
     public void image() throws Exception {
 
-        Result result = uploadFile("/upload/image", "panda.jpg", "panda.jpg");
+        Result result = uploadFile("/core/upload/image", "panda.jpg", "panda.jpg");
         Map map = (Map) result.getContent();
         String id = map.get("panda.jpg").toString();
 
 
-        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/download/image").param("id", id));
+        ResultActions resultActions = mockMvc.perform(MockMvcRequestBuilders.post("/core/download/image").param("id", id));
         byte[] bytes = resultActions.andReturn().getResponse().getContentAsByteArray();
         BufferedImage image = ImageIO.read(new ByteArrayInputStream(bytes));
         ImageIO.write(image, "JPG", new FileOutputStream("/test.jpg"));

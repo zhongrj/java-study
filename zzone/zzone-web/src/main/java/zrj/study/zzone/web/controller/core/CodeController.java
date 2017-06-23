@@ -21,7 +21,7 @@ import java.io.IOException;
  * @date 2017/4/26
  */
 @RestController
-@RequestMapping("/code/")
+@RequestMapping("/core/code/")
 public class CodeController extends BaseController {
 
     @Autowired

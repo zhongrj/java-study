@@ -30,6 +30,8 @@ public class User extends BaseEntity {
     private String type;
     private String status;
 
+    private String token;
+
     public String getAccount() {
         return account;
     }
@@ -84,5 +86,13 @@ public class User extends BaseEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

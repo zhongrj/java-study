@@ -17,7 +17,7 @@ import zrj.study.zzone.web.model.core.OptionModel;
  * @date 2017/5/3
  */
 @RestController
-@RequestMapping("/option/")
+@RequestMapping("/core/option/")
 public class OptionController extends BaseController {
 
     @Autowired

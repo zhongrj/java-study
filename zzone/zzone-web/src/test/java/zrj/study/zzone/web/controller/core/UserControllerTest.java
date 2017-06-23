@@ -33,11 +33,17 @@ public class UserControllerTest extends BaseControllerTest {
         user.setEmail("329053269@pp.com");
         userModel.setUser(user);
 
-        postJsonUnlogin("/register", userModel);
+        postJsonUnlogin("/core/user/register", userModel);
 
         account = user.getAccount();
         password = "123123";
         login();
+    }
+
+
+    @Test
+    public void info() throws Exception {
+        postJsonLogin("/core/user/info", null);
     }
 
 }

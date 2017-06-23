@@ -155,7 +155,7 @@ public class BaseControllerTest {
         return JsonUtils.parseToObject(resultActions.andReturn().getResponse().getContentAsString(), Result.class);
     }
 
-    //    @Test
+    //@Test
     public void login() throws Exception {
         UserModel userModel = new UserModel();
         initBaseModel(userModel);
@@ -164,7 +164,7 @@ public class BaseControllerTest {
         user.setPassword(password);
         userModel.setUser(user);
 
-        ResultActions resultActions = postJsonUnlogin("/login", userModel);
+        ResultActions resultActions = postJsonUnlogin("/core/user/login", userModel);
         Map content = (Map) getResult(resultActions).getContent();
         token = content.get("token").toString();
     }
@@ -179,7 +179,7 @@ public class BaseControllerTest {
         code.setHeight(100);
         code.setWidth(100);
         codeModel.setCode(code);
-        postJsonSimply("/code/get", codeModel);
+        postJsonSimply("/core/code/get", codeModel);
         return codeService.getCode(macId);
     }
 
@@ -197,7 +197,7 @@ public class BaseControllerTest {
     protected Map getFrontKey() throws Exception {
         BaseModel baseModel = new BaseModel();
         initBaseModel(baseModel);
-        ResultActions resultActions = postJsonUnlogin("/key/get", baseModel);
+        ResultActions resultActions = postJsonUnlogin("/core/key/get", baseModel);
         return (Map) getResult(resultActions).getContent();
     }
 
@@ -215,6 +215,7 @@ public class BaseControllerTest {
 
     /**
      * 上传文件
+     *
      * @param fileClasspath 文件路径（基于classpath）
      * @return 响应
      */
@@ -228,12 +229,6 @@ public class BaseControllerTest {
                 .andExpect(jsonPath("$.code").value(Result.SUCCESS));
 
         return getResult(resultActions);
-    }
-
-
-    //    @Test
-    public void hello() throws Exception {
-        postJsonLogin("/hello", null);
     }
 
 

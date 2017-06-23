@@ -17,7 +17,7 @@ public class UploadControllerTest extends BaseControllerTest {
 
     @Test
     public void image() throws Exception {
-        Result result = uploadFile("/upload/image", "panda.jpg", "panda.jpg");
+        Result result = uploadFile("/core/upload/image", "panda.jpg", "panda.jpg");
         Map map = (Map) result.getContent();
         Assert.assertNotNull(map.get("panda.jpg"));
     }

@@ -34,13 +34,13 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**");
         registry.addInterceptor(authInterceptor()).addPathPatterns("/**")
                 .excludePathPatterns("/test/**")
-                .excludePathPatterns("/login")
-                .excludePathPatterns("/register")
-                .excludePathPatterns("/key/get")
-                .excludePathPatterns("/code/get")
-                .excludePathPatterns("/upload/image")                   // temp
-                .excludePathPatterns("/download/image")                 // temp
-                .excludePathPatterns("/option/get");
+                .excludePathPatterns("/core/user/login")
+                .excludePathPatterns("/core/user/register")
+                .excludePathPatterns("/core/key/get")
+                .excludePathPatterns("/core/code/get")
+                .excludePathPatterns("/core/upload/image")                   // temp
+                .excludePathPatterns("/core/download/image")                 // temp
+                .excludePathPatterns("/core/option/get");
         super.addInterceptors(registry);
     }
 

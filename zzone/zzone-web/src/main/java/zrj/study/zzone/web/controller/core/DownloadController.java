@@ -21,7 +21,7 @@ import java.net.URLEncoder;
  * @date 2017/6/8
  */
 @RestController
-@RequestMapping("/download/")
+@RequestMapping("/core/download/")
 public class DownloadController extends BaseController {
 
     @Autowired
