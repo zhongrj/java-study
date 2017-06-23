@@ -24,15 +24,15 @@ public class KeyControllerTest extends BaseControllerTest{
 
     @Test
     public void key() throws Exception {
-        Map key = getFrontKey();
+        String pubKeyString = getPubKey();
 
         String srcText = "钟如劼";
-        byte[] pubKey = Base64.getDecoder().decode(key.get("pubKey").toString());
+        byte[] pubKey = Base64.getDecoder().decode(pubKeyString);
         // 加密useBC
         byte[] encryptedDataBC = RSAUtils.encryptUseBC(srcText.getBytes("UTF-8"), pubKey);
 
         // 解密useBC
-        RSAKey priKey = keyService.get(key.get("keyId").toString());
+        RSAKey priKey = keyService.get(macId);
         byte[] srcDataBC = RSAUtils.decryptUseBC(encryptedDataBC, priKey.getRsaPrivateKey());
 
         Assert.assertEquals(srcText, new String(srcDataBC, "UTF-8"));

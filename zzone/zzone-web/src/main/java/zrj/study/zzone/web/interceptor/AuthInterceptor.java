@@ -45,6 +45,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             }
         }
 
+        user.setToken(token);
         request.setAttribute("user", user);
         return true;
     }

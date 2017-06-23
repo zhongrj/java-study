@@ -188,17 +188,18 @@ public class BaseControllerTest {
      * 发送并获取rsa密钥（从keyService中获取）
      */
     protected RSAKey getKey() throws Exception {
-        return keyService.get(getFrontKey().get("keyId").toString());
+        getPubKey();
+        return keyService.get(macId);
     }
 
     /**
      * 发送并获取rsa公钥
      */
-    protected Map getFrontKey() throws Exception {
+    protected String getPubKey() throws Exception {
         BaseModel baseModel = new BaseModel();
         initBaseModel(baseModel);
         ResultActions resultActions = postJsonUnlogin("/core/key/get", baseModel);
-        return (Map) getResult(resultActions).getContent();
+        return ((Map) getResult(resultActions).getContent()).get("pubKey").toString();
     }
 
     /**

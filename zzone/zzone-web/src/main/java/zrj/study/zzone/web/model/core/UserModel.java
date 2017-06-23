@@ -14,9 +14,9 @@ import javax.validation.constraints.NotNull;
 public class UserModel extends BaseModel {
 
     @Valid
+    @NotNull(message = "user不能为空")
     private User user;
 
-    @NotNull(message = "user不能为空")
     public User getUser() {
         return user;
     }

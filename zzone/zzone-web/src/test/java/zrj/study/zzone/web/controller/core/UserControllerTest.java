@@ -24,7 +24,6 @@ public class UserControllerTest extends BaseControllerTest {
         initBaseModel(userModel);
         userModel.setCodeTxt(getCodeTxt());
         RSAKey rsaKey = getKey();
-        userModel.setKeyId(rsaKey.getId());
         User user = new User();
         user.setAccount("aaa");
         user.setPassword(encryptUseBCBase64("123123", rsaKey.getRsaPublicKey()));
@@ -44,6 +43,11 @@ public class UserControllerTest extends BaseControllerTest {
     @Test
     public void info() throws Exception {
         postJsonLogin("/core/user/info", null);
+    }
+
+    @Test
+    public void logout() throws Exception {
+        postJsonLogin("/core/user/logout", null);
     }
 
 }

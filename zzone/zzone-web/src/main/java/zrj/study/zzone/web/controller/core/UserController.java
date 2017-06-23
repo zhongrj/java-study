@@ -36,13 +36,20 @@ public class UserController extends BaseController {
     @Autowired
     private CodeService codeService;
 
-    @RequestMapping("/login")
+    @RequestMapping("login")
     public Result login(@RequestBody @Valid UserModel userModel) {
         User user = userService.login(userModel.getUser());
         return new Result(Result.SUCCESS, "登录成功", user); // 可多个设备同时登陆, 一个用户可对应多个token
     }
 
-    @RequestMapping("/register")
+    @RequestMapping("logout")
+    public Result logout(@RequestAttribute("user") User user) {
+        //..删除session
+        System.out.println(user.getToken() + "登出");
+        return new Result(Result.SUCCESS, "登出成功");
+    }
+
+    @RequestMapping("register")
     public Result register(@RequestBody @Valid UserModel userModel) {
 
         // 校验验证码
@@ -51,19 +58,16 @@ public class UserController extends BaseController {
         User user = userModel.getUser();
 
         // 密码解密
-        RSAKey rsaKey = keyService.get(userModel.getKeyId());
+        RSAKey rsaKey = keyService.get(userModel.getMacId());
         user.setPassword(decryptBase64((user.getPassword()), rsaKey));
 
         // 注册
         userService.register(user);
 
-        // 业务成功后删除密钥
-        keyService.remove(userModel.getKeyId());
-
         return new Result(Result.SUCCESS, "注册成功");
     }
 
-    @RequestMapping("/info")
+    @RequestMapping("info")
     public Result info(@RequestAttribute("user") User user) {
         return new Result(Result.SUCCESS, "获取用户信息成功", user);
     }

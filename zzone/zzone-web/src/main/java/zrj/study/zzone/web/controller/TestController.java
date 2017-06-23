@@ -51,7 +51,7 @@ public class TestController extends BaseController {
     @RequestMapping("decrypt")
     public Result decrypt(@RequestBody UserModel userModel) {
         User user = userModel.getUser();
-        user.setPassword(decryptBase64(user.getPassword(), keyService.get(userModel.getKeyId())));
+        user.setPassword(decryptBase64(user.getPassword(), keyService.get(userModel.getMacId())));
         return new Result(Result.SUCCESS, "解密成功", userModel);
     }
 

@@ -33,9 +33,8 @@ public class KeyController extends BaseController {
      */
     @RequestMapping("get")
     public Result get(@RequestBody @Valid BaseModel baseModel) {
-        RSAKey rsaKey = keyService.newKey(baseModel.getSource());
+        RSAKey rsaKey = keyService.newKey(baseModel.getMacId(), baseModel.getSource());
         Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("keyId", rsaKey.getId());
         resultMap.put("pubKey", base64encode(rsaKey.getRsaPublicKey().getEncoded()));
         return new Result(Result.SUCCESS, "获取密钥成功", resultMap);
     }

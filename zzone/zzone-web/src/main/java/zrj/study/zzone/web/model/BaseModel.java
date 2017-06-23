@@ -24,11 +24,6 @@ public class BaseModel {
     private String source;
 
     /**
-     * 密钥id
-     */
-    private String keyId;
-
-    /**
      * 验证码
      */
     private String codeTxt;
@@ -47,14 +42,6 @@ public class BaseModel {
 
     public void setSource(String source) {
         this.source = source;
-    }
-
-    public String getKeyId() {
-        return keyId;
-    }
-
-    public void setKeyId(String keyId) {
-        this.keyId = keyId;
     }
 
     public String getCodeTxt() {

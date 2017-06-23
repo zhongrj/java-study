@@ -47,7 +47,7 @@ public class KeyService extends BaseService {
     public RSAKey get(String id) {
         RSAKey rsaKey = getKeyMap().get(id);
         if (null == rsaKey) {
-            throw new ZzoneException("密钥已失效");
+            throw new ZzoneException("请获取密钥加密");
         }
         return rsaKey;
     }
@@ -67,13 +67,13 @@ public class KeyService extends BaseService {
      *
      * @return RSAKey
      */
-    public RSAKey newKey(String source) {
+    public RSAKey newKey(String id, String source) {
         try {
             RSAKey rsaKey = new RSAKey();
+            rsaKey.setId(id);
             KeyPair keyPair = RSAUtils.newKeyPair("web".equals(source));
             rsaKey.setRsaPublicKey((RSAPublicKey) keyPair.getPublic());
             rsaKey.setRsaPrivateKey((RSAPrivateKey) keyPair.getPrivate());
-            rsaKey.generateUUID();
             rsaKey.setCreateDate(new Date());
             getKeyMap().put(rsaKey.getId(), rsaKey);
             return rsaKey;
