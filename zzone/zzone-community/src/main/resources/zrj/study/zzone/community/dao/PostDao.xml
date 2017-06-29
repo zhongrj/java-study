@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zrj.study.zzone.community.dao.PostDao">
+
+    <!-- 发帖 -->
+    <insert id="insert">
+        INSERT INTO community_post(id, title, comment_count, create_by, create_date, del_flag)
+        VALUES (#{id}, #{title}, #{commentCount}, #{createBy}, NOW(), #{delFlag})
+    </insert>
+
+    <select id="list" resultType="Post">
+        SELECT
+          p.*,
+          user.name AS 'user.name'
+        FROM community_post p
+        JOIN core_user user ON user.id = p.create_by
+        WHERE p.del_flag = '0' AND user.del_flag = '0'
+        ORDER BY p.create_date DESC
+    </select>
+
+</mapper>

@@ -38,5 +38,9 @@
         <setting name="jdbcTypeForNull" value="NULL"/>
 		
 	</settings>
+
+	<plugins>
+		<plugin interceptor="com.github.pagehelper.PageInterceptor" />
+	</plugins>
 	
 </configuration>

@@ -7,7 +7,7 @@ import java.util.List;
  * @email 329053269@qq.com
  * @date 2017/4/20
  */
-interface BaseDao<E> {
+public interface BaseDao<E> {
 
     E get(String id);
 

@@ -14,5 +14,11 @@
 
     <artifactId>zzone-community</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>zrj.study</groupId>
+            <artifactId>zzone-core</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

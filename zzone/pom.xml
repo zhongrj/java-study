@@ -21,6 +21,12 @@
                 <artifactId>zzone-core</artifactId>
                 <version>${project.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>zrj.study</groupId>
+                <artifactId>zzone-community</artifactId>
+                <version>${project.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

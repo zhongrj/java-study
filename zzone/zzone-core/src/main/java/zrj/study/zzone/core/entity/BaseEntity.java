@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import zrj.study.util.string.IdGen;
 
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * @author zhongrj
@@ -14,6 +13,8 @@ import java.util.UUID;
 public abstract class BaseEntity {
 
     private String id;
+
+    private String createBy;
 
     private Date createDate;
 
@@ -35,6 +36,14 @@ public abstract class BaseEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
     public Date getCreateDate() {

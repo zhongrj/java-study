@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zrj.study.zzone.core.dao.SequenceDao">
+
+    <select id="get" resultType="Sequence">
+        SELECT *
+        FROM core_sequence
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO core_sequence(id, current)
+        VALUES(#{id}, #{current})
+    </insert>
+
+    <update id="update">
+        UPDATE core_sequence
+        SET current = #{current} + 1
+        WHERE id = #{id} AND current = #{current}
+    </update>
+
+</mapper>

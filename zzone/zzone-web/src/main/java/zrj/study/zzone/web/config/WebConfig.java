@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import zrj.study.zzone.community.config.CommunityConfig;
 import zrj.study.zzone.core.common.config.CoreConfig;
 import zrj.study.zzone.web.interceptor.AuthInterceptor;
 import zrj.study.zzone.web.interceptor.LogInterceptor;
@@ -20,7 +21,7 @@ import zrj.study.zzone.web.interceptor.LogInterceptor;
  * @date 2017/4/18
  */
 @Configuration
-@Import({CoreConfig.class})
+@Import({CoreConfig.class, CommunityConfig.class})
 @ComponentScan(basePackages = {"zrj.study.zzone.web.controller"})
 public class WebConfig extends WebMvcConfigurerAdapter {
 

@@ -12,6 +12,12 @@
     <artifactId>zzone-web</artifactId>
 
     <dependencies>
+
+        <dependency>
+            <groupId>zrj.study</groupId>
+            <artifactId>zzone-community</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>zrj.study</groupId>
             <artifactId>zzone-core</artifactId>
