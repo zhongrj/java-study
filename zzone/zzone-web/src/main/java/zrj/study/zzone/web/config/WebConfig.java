@@ -35,13 +35,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**");
         registry.addInterceptor(authInterceptor()).addPathPatterns("/**")
                 .excludePathPatterns("/test/**")
+                // core
                 .excludePathPatterns("/core/user/login")
                 .excludePathPatterns("/core/user/register")
                 .excludePathPatterns("/core/key/get")
                 .excludePathPatterns("/core/code/get")
                 .excludePathPatterns("/core/upload/image")                   // temp
                 .excludePathPatterns("/core/download/image")                 // temp
-                .excludePathPatterns("/core/option/get");
+                .excludePathPatterns("/core/option/get")
+                // community
+                .excludePathPatterns("/community/postList")
+                .excludePathPatterns("/community/commentList");
         super.addInterceptors(registry);
     }
 

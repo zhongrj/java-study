@@ -54,21 +54,11 @@ public class UserService extends BaseService {
     @Transactional
     public void register(User user) {
 
-        if (userDao.countByAccount(user.getAccount()) > 0) {
-            throw new ZzoneException("用户名已存在");
-        }
-
-        if (StringUtils.isBlank(user.getName())) {
-            throw new ZzoneException("用户昵称不能为空");
-        }
-
-        if (StringUtils.isBlank(user.getMobile()) || !PHONE_PATTERN.matcher(user.getMobile()).matches()){
-            throw new ZzoneException("手机号格式错误");
-        }
-
-        if (StringUtils.isBlank(user.getEmail()) || !EMAIL_PATTERN.matcher(user.getEmail()).matches()){
-            throw new ZzoneException("邮箱格式错误");
-        }
+        // 校验
+        checkAccount(user.getAccount());
+        checkName(user.getName());
+        checkMobile(user.getMobile());
+        checkEmail(user.getEmail());
 
         user.preInsert();
         user.generateUUID();
@@ -77,4 +67,56 @@ public class UserService extends BaseService {
         userDao.insert(user);
     }
 
+    @Transactional
+    public void modifyInfo(String id, User user) {
+
+        // 校验
+//        checkName(user.getName());
+//        checkMobile(user.getMobile());
+//        checkEmail(user.getEmail());
+//        不用校验重复
+
+        user.setId(id);
+        userDao.update(user);
+    }
+
+
+    private void checkAccount(String account) {
+        if (userDao.countByField("account", account) > 0) {
+            throw new ZzoneException("该用户名已存在");
+        }
+    }
+
+    private void checkName(String name) {
+        if (StringUtils.isBlank(name)) {
+            throw new ZzoneException("用户昵称不能为空");
+        }
+        if (userDao.countByField("name", name) > 0) {
+            throw new ZzoneException("该昵称已存在");
+        }
+    }
+
+    private void checkMobile(String mobile) {
+        if (StringUtils.isBlank(mobile)) {
+            throw new ZzoneException("手机号不能为空");
+        }
+        if (!PHONE_PATTERN.matcher(mobile).matches()) {
+            throw new ZzoneException("手机号格式错误");
+        }
+        if (userDao.countByField("mobile", mobile) > 0) {
+            throw new ZzoneException("该手机已绑定");
+        }
+    }
+
+    private void checkEmail(String email) {
+        if (StringUtils.isBlank(email)) {
+            throw new ZzoneException("邮箱不能为空");
+        }
+        if (!EMAIL_PATTERN.matcher(email).matches()) {
+            throw new ZzoneException("邮箱格式错误");
+        }
+        if (userDao.countByField("email", email) > 0) {
+            throw new ZzoneException("该邮箱已绑定");
+        }
+    }
 }

@@ -72,5 +72,10 @@ public class UserController extends BaseController {
         return new Result(Result.SUCCESS, "获取用户信息成功", user);
     }
 
+    @RequestMapping("modifyInfo")
+    public Result modifyInfo(@RequestAttribute("user") User user, @RequestBody UserModel userModel) {
+        userService.modifyInfo(user.getId(), userModel.getUser());
+        return new Result(Result.SUCCESS, "修改资料成功");
+    }
 
 }

@@ -25,11 +25,11 @@ public class UserControllerTest extends BaseControllerTest {
         userModel.setCodeTxt(getCodeTxt());
         RSAKey rsaKey = getKey();
         User user = new User();
-        user.setAccount("aaa");
+        user.setAccount("aaab");
         user.setPassword(encryptUseBCBase64("123123", rsaKey.getRsaPublicKey()));
-        user.setName("测试注册");
-        user.setMobile("13660677123");
-        user.setEmail("329053269@pp.com");
+        user.setName("测试注册1");
+        user.setMobile("13660677133");
+        user.setEmail("329053269a@pp.com");
         userModel.setUser(user);
 
         postJsonUnlogin("/core/user/register", userModel);
@@ -48,6 +48,17 @@ public class UserControllerTest extends BaseControllerTest {
     @Test
     public void logout() throws Exception {
         postJsonLogin("/core/user/logout", null);
+    }
+
+    @Test
+    @Commit
+    public void modifyInfo() throws Exception {
+        UserModel userModel = new UserModel();
+        User user = new User();
+        user.setName("改个名字");
+
+        userModel.setUser(user);
+        postJsonLogin("/core/user/modifyInfo", userModel);
     }
 
 }

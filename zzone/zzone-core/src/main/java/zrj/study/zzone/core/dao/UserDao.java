@@ -1,5 +1,6 @@
 package zrj.study.zzone.core.dao;
 
+import org.apache.ibatis.annotations.Param;
 import zrj.study.zzone.core.entity.User;
 
 /**
@@ -9,6 +10,6 @@ import zrj.study.zzone.core.entity.User;
  */
 public interface UserDao extends BaseDao<User> {
 
-    int countByAccount(String account);
+    int countByField(@Param("field") String field, @Param("value") String value);
 
 }

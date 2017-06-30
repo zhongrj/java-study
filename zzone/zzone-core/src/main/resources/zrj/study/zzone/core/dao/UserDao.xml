@@ -12,11 +12,11 @@
     </select>
 
     <!-- 查找同名用户 -->
-    <select id="countByAccount" resultType="int">
+    <select id="countByField" resultType="int">
         SELECT
             COUNT(0)
         FROM core_user u
-        WHERE u.del_flag = 0 AND u.account = #{account}
+        WHERE u.del_flag = 0 AND u.${field} = #{value}
     </select>
 
     <!-- 新增注册用户 -->
@@ -24,5 +24,17 @@
         INSERT INTO core_user(id, account, password, name, mobile, email, type, status, create_date, update_date, del_flag)
         VALUES (#{id}, #{account}, #{password}, #{name}, #{mobile}, #{email}, #{type}, #{status}, NOW(), NOW(), #{delFlag})
     </insert>
+
+    <!-- 修改个人资料 -->
+    <update id="update">
+        UPDATE core_user
+        SET
+          name = #{name},
+          mobile = #{mobile},
+          email = #{email},
+          email = #{email}
+        WHERE
+          del_flag = 0 AND id = #{id}
+    </update>
 
 </mapper>
