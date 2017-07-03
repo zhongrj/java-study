@@ -39,4 +39,9 @@ public class SessionService extends BaseService {
     public User getUserByToken(String token) {
         return sessionDao.getUserByToken(token);
     }
+
+    @Transactional
+    public void delSession(String userId) {
+        sessionDao.deleteByUserId(userId);
+    }
 }

@@ -19,10 +19,6 @@ import java.util.regex.Pattern;
 @Transactional(readOnly = true)
 public class UserService extends BaseService {
 
-    private static final Pattern PHONE_PATTERN = Pattern.compile("\\d{11}");
-
-    private static final Pattern EMAIL_PATTERN = Pattern.compile("^(\\w)+(\\.\\w+)*@(\\w)+((\\.\\w+)+)$");
-
     @Autowired
     UserDao userDao;
 
@@ -31,6 +27,13 @@ public class UserService extends BaseService {
 
     @Transactional
     public User login(User user) {
+
+        if (StringUtils.isBlank(user.getAccount())) {
+            throw new ZzoneException("用户名不能为空");
+        }
+        if (StringUtils.isBlank(user.getPassword())) {
+            throw new ZzoneException("密码不能为空");
+        }
 
         user = userDao.get(user);
 
@@ -56,9 +59,10 @@ public class UserService extends BaseService {
 
         // 校验
         checkAccount(user.getAccount());
-        checkName(user.getName());
-        checkMobile(user.getMobile());
-        checkEmail(user.getEmail());
+        checkPassword(user.getPassword());
+        checkName(null, user.getName());
+        checkMobile(null, user.getMobile());
+        checkEmail(null, user.getEmail());
 
         user.preInsert();
         user.generateUUID();
@@ -71,52 +75,76 @@ public class UserService extends BaseService {
     public void modifyInfo(String id, User user) {
 
         // 校验
-//        checkName(user.getName());
-//        checkMobile(user.getMobile());
-//        checkEmail(user.getEmail());
-//        不用校验重复
+        checkName(id, user.getName());
+        checkMobile(id, user.getMobile());
+        checkEmail(id, user.getEmail());
 
         user.setId(id);
         userDao.update(user);
     }
 
+    @Transactional
+    public void modifyPassword(String id, User user) {
+
+        checkPassword(user.getPassword());
+
+        user.setId(id);
+        userDao.modifyPassword(user);
+
+        sessionService.delSession(user.getId());
+    }
 
     private void checkAccount(String account) {
-        if (userDao.countByField("account", account) > 0) {
+        if (StringUtils.isBlank(account)) {
+            throw new ZzoneException("用户名不能为空");
+        }
+        if (null != userDao.getIdByField("account", account)) {
             throw new ZzoneException("该用户名已存在");
         }
     }
 
-    private void checkName(String name) {
+    private void checkPassword(String password) {
+        if (StringUtils.isBlank(password)) {
+            throw new ZzoneException("密码不能为空");
+        }
+    }
+
+    private void checkName(String id, String name) {
         if (StringUtils.isBlank(name)) {
             throw new ZzoneException("用户昵称不能为空");
         }
-        if (userDao.countByField("name", name) > 0) {
+        String existId = userDao.getIdByField("name", name);
+        if (null != existId && !existId.equals(id)) {
             throw new ZzoneException("该昵称已存在");
         }
     }
 
-    private void checkMobile(String mobile) {
+    private static final Pattern PHONE_PATTERN = Pattern.compile("\\d{11}");
+    private void checkMobile(String id, String mobile) {
         if (StringUtils.isBlank(mobile)) {
             throw new ZzoneException("手机号不能为空");
         }
         if (!PHONE_PATTERN.matcher(mobile).matches()) {
             throw new ZzoneException("手机号格式错误");
         }
-        if (userDao.countByField("mobile", mobile) > 0) {
+        String existId = userDao.getIdByField("mobile", mobile);
+        if (null != existId && !existId.equals(id)) {
             throw new ZzoneException("该手机已绑定");
         }
     }
 
-    private void checkEmail(String email) {
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^(\\w)+(\\.\\w+)*@(\\w)+((\\.\\w+)+)$");
+    private void checkEmail(String id, String email) {
         if (StringUtils.isBlank(email)) {
             throw new ZzoneException("邮箱不能为空");
         }
         if (!EMAIL_PATTERN.matcher(email).matches()) {
             throw new ZzoneException("邮箱格式错误");
         }
-        if (userDao.countByField("email", email) > 0) {
+        String existId = userDao.getIdByField("email", email);
+        if (null != existId && !existId.equals(id)) {
             throw new ZzoneException("该邮箱已绑定");
         }
     }
+
 }

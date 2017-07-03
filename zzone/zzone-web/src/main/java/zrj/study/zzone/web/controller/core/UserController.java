@@ -73,9 +73,20 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping("modifyInfo")
-    public Result modifyInfo(@RequestAttribute("user") User user, @RequestBody UserModel userModel) {
+    public Result modifyInfo(@RequestAttribute("user") User user, @RequestBody @Valid UserModel userModel) {
         userService.modifyInfo(user.getId(), userModel.getUser());
         return new Result(Result.SUCCESS, "修改资料成功");
+    }
+
+    @RequestMapping("modifyPassword")
+    public Result modifyPassword(@RequestAttribute("user") User user, @RequestBody @Valid UserModel userModel) {
+
+        // 密码解密
+        RSAKey rsaKey = keyService.get(userModel.getMacId());
+        userModel.getUser().setPassword(decryptBase64((userModel.getUser().getPassword()), rsaKey));
+
+        userService.modifyPassword(user.getId(), userModel.getUser());
+        return new Result(Result.SUCCESS, "修改密码成功");
     }
 
 }

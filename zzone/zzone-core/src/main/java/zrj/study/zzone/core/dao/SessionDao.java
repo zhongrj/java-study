@@ -1,5 +1,6 @@
 package zrj.study.zzone.core.dao;
 
+import org.apache.ibatis.annotations.Param;
 import zrj.study.zzone.core.entity.Session;
 import zrj.study.zzone.core.entity.User;
 
@@ -12,4 +13,5 @@ public interface SessionDao extends BaseDao<Session> {
 
     User getUserByToken(String token);
 
+    int deleteByUserId(@Param("userId") String userId);
 }

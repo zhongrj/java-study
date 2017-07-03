@@ -17,5 +17,11 @@
         WHERE s.token = #{token} AND s.expire_date > NOW() AND u.del_flag = 0
         LIMIT 1;
     </select>
+    
+    <!-- 根据userId删除用户session -->
+    <delete id="deleteByUserId">
+        DELETE FROM `core_session`
+        WHERE user_id = #{userId}
+    </delete>
 
 </mapper>

@@ -10,6 +10,7 @@ import zrj.study.zzone.core.entity.User;
  */
 public interface UserDao extends BaseDao<User> {
 
-    int countByField(@Param("field") String field, @Param("value") String value);
+    String getIdByField(@Param("field") String field, @Param("value") String value);
 
+    int modifyPassword(User user);
 }

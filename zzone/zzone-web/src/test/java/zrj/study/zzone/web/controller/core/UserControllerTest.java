@@ -5,10 +5,7 @@ import org.springframework.test.annotation.Commit;
 import zrj.study.zzone.core.entity.RSAKey;
 import zrj.study.zzone.core.entity.User;
 import zrj.study.zzone.web.controller.BaseControllerTest;
-import zrj.study.zzone.web.model.Result;
 import zrj.study.zzone.web.model.core.UserModel;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 /**
  * @author zhongrj
@@ -51,14 +48,28 @@ public class UserControllerTest extends BaseControllerTest {
     }
 
     @Test
-    @Commit
+//    @Commit
     public void modifyInfo() throws Exception {
         UserModel userModel = new UserModel();
+        initBaseModel(userModel);
         User user = new User();
         user.setName("改个名字");
-
+        user.setMobile("13663666176");
+        user.setEmail("1231233425345@qq.com");
         userModel.setUser(user);
         postJsonLogin("/core/user/modifyInfo", userModel);
+    }
+
+    @Test
+    @Commit
+    public void modigyPassword() throws Exception {
+        UserModel userModel = new UserModel();
+        initBaseModel(userModel);
+        User user = new User();
+        RSAKey rsaKey = getKey();
+        user.setPassword(encryptUseBCBase64("user", rsaKey.getRsaPublicKey()));
+        userModel.setUser(user);
+        postJsonLogin("/core/user/modifyPassword", userModel);
     }
 
 }

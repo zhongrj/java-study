@@ -17,10 +17,7 @@ public class User extends BaseEntity {
     public static final String STATUS_FREEZED = "1"; // 冻结状态
     public static final String STATUS_BLACKLIST = "2"; // 黑名单状态
 
-    @NotEmpty(message = "用户名不能为空")
     private String account;
-
-    @NotEmpty(message = "密码不能为空")
     private String password;
 
     private String name;

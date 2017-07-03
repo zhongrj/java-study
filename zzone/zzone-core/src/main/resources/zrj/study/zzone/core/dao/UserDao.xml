@@ -12,9 +12,9 @@
     </select>
 
     <!-- 查找同名用户 -->
-    <select id="countByField" resultType="int">
+    <select id="getIdByField" resultType="String">
         SELECT
-            COUNT(0)
+            id
         FROM core_user u
         WHERE u.del_flag = 0 AND u.${field} = #{value}
     </select>
@@ -32,7 +32,16 @@
           name = #{name},
           mobile = #{mobile},
           email = #{email},
-          email = #{email}
+          update_date = NOW()
+        WHERE
+          del_flag = 0 AND id = #{id}
+    </update>
+
+    <!-- 修改密码 -->
+    <update id="modifyPassword">
+        UPDATE core_user
+        SET
+          password = #{password}
         WHERE
           del_flag = 0 AND id = #{id}
     </update>
