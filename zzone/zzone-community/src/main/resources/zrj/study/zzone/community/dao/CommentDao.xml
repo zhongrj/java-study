@@ -19,6 +19,7 @@
         <if test="null != postId and '' != postId">
             AND c.post_id = #{postId}
         </if>
+        ORDER BY create_date ASC
     </select>
 
 </mapper>
