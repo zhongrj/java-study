@@ -26,6 +26,7 @@
         <druid.version>1.0.11</druid.version>
         <bcprov-jdk15on.version>1.47</bcprov-jdk15on.version>
         <pagehelper.version>5.0.0</pagehelper.version>
+        <redis.clients>2.9.0</redis.clients>
     </properties>
 
     <dependencyManagement>
@@ -78,6 +79,13 @@
                 <artifactId>bcprov-jdk15on</artifactId>
                 <version>${bcprov-jdk15on.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${redis.clients}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>
