@@ -45,15 +45,15 @@
             </dependency>
 
             <!--<dependency>-->
-                <!--<groupId>org.mybatis</groupId>-->
-                <!--<artifactId>mybatis</artifactId>-->
-                <!--<version>${mybatis.version}</version>-->
+            <!--<groupId>org.mybatis</groupId>-->
+            <!--<artifactId>mybatis</artifactId>-->
+            <!--<version>${mybatis.version}</version>-->
             <!--</dependency>-->
 
             <!--<dependency>-->
-                <!--<groupId>org.mybatis</groupId>-->
-                <!--<artifactId>mybatis-spring</artifactId>-->
-                <!--<version>${mybatis-spring.version}</version>-->
+            <!--<groupId>org.mybatis</groupId>-->
+            <!--<artifactId>mybatis-spring</artifactId>-->
+            <!--<version>${mybatis-spring.version}</version>-->
             <!--</dependency>-->
 
             <dependency>
@@ -105,11 +105,11 @@
     </build>
 
     <repositories>
-            <repository>
-                <id>central</id>
-                <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            </repository>
-        </repositories>
+        <repository>
+            <id>central</id>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
     <pluginRepositories>
         <pluginRepository>
             <id>ali-maven</id>
