@@ -12,6 +12,7 @@ public interface IPerson {
 }
 
 interface IAnimal{
+    int a = 0;// 默认final
     default void walk() {
         System.out.println("是动物就能走路");
     }
@@ -24,5 +25,7 @@ class Person implements IPerson, IAnimal { // java8可以多继承了..
         Person p = new Person();
         p.work();
         p.walk();
+//        p.a = 2;
+        System.out.println(p.a);
     }
 }
