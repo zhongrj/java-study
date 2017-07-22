@@ -1,0 +1,14 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/
+server:
+  port: 8080
+spring:
+  application:
+    name: zzone-zuul
+zuul:
+  routes:
+    zzone-core:
+      path: /core/**
+      serviceId: zzone-core
