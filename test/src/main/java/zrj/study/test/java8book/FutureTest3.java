@@ -41,7 +41,7 @@ public class FutureTest3 {
             t.setDaemon(true);          // 守护线程（如果不存在用户线程则退出）
             return t;
         });
-        List<CompletableFuture> list2 = Stream.iterate(0, a -> a + 1).limit(10)
+        List<CompletableFuture> list2 = Stream.iterate(0, a -> a + 1).limit(20)
                 .map(a -> String.valueOf(a))
                 .map(a -> CompletableFuture.supplyAsync(
                         () -> FutureTest2.map(a),
