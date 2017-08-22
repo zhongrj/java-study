@@ -9,3 +9,9 @@ eureka:
     fetchRegistry: false
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+spring:
+  application:
+    name: zzone-eureka
+  zipkin:
+    base-url: http://localhost:8001

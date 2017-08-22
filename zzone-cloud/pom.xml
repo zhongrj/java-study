@@ -30,6 +30,8 @@
         <module>zzone-core</module>
         <module>zzone-eureka</module>
         <module>zzone-zuul</module>
+        <module>zzone-zipkin</module>
+        <module>zzone-ribbon</module>
     </modules>
 
 

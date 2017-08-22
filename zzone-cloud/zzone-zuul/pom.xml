@@ -24,6 +24,12 @@
             <artifactId>spring-cloud-starter-eureka</artifactId>
         </dependency>
 
+        <!-- zipkin -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+
         <!-- spring boot test-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
