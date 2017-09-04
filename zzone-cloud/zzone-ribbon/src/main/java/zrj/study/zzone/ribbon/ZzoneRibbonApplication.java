@@ -15,6 +15,4 @@ public class ZzoneRibbonApplication {
     public static void main(String[] args) {
         SpringApplication.run(ZzoneRibbonApplication.class, args);
     }
-
-
 }
