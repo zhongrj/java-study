@@ -41,7 +41,7 @@ public class Test47 {
     }
 
 
-    private static void print(int[][] matrix) {
+    public static void print(int[][] matrix) {
         System.out.println("[");
         for (int i = 0; i < matrix.length; i++) {
             System.out.print("  [");

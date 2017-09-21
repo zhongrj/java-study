@@ -1,6 +1,8 @@
 package zrj.study.test.acm;
 
 /**
+ * 50. Pow(x, n)
+ *
  * @author zhongrj
  * @email 329053269@qq.com
  * @date 2017/9/19
